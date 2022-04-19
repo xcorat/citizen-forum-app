@@ -1,0 +1,31 @@
+{ 
+    "en_GB" : {
+        "app_title": "Citizen Forum",
+        "nav": {
+            "fill": "Fill Form",
+            "read_responses": "Read Responses"
+        },
+        "home": {
+            "hero_title": "Contribute to Citizen Forum",
+            "hero_sub": "We are a bunch of professionals voluntarily collecting ideas of citizens under 22 subject areas and we plan to compile a list of development proposals for Sri Lanka. These will be forwarded to the relevant state authorities and the parliament once the situation becomes normal again."
+        }
+    },
+    "si_LK": {
+        "app_title": "පුරවැසි සභාව",
+        "nav": {
+            "fill": "පෝරමය පුරවන්න",
+            "read_responses": "ලැබූ අදහස්"
+        },
+        "home": {
+            "hero_title": "අදහස් එකතුකරන්න",
+            "hero_sub": "ලංකාවේ සංවර්ධනය සඳහා පුරවැසියන් ඉදිරිපත් කරන අදහස් එකතුකර අදාළ ආයතන වෙත දැනුම්දීමට ස්වේච්ඡාවෙන් ඉදිරිපත්ව සිටින වෘත්තිකයන් හා පුරවැසියන් කණ්ඩායමක් වන අපට ඔබේ අදහස් සහ යෝජනා මේ පෝරමය පිරවීම මඟින් ලබාදිය හැක."
+        }
+    },
+    "ta_LK": {
+        "app_title": "குடிமக்கள் மன்றம்",
+        "home": {
+            "hero_title": "Contribute to Citizen Forum",
+            "hero_sub": "22 விடயப் பிரிவுகளின் கீழ் உள்ள பிரஜைகளின் கருத்துக்களை தானாக முன்வந்து சேகரித்துக் கொள்ளும் தொழில் வாண்மையாளர்களின் ஒரு கூட்டமாக நாம் இருப்பதோடு, இலங்கைக்கான அபிவிருத்தி முன்மொழிவுகளின் பட்டியலைத் தொகுக்கத் திட்டமிட்டுள்ளோம். நிலைமை மீண்டும் இயல்பு நிலைக்கு வந்தவுடன் இவை உரிய அரச அதிகாரிகளுக்கும் பாராளுமன்றத்திற்கும் அனுப்பி வைக்கப்படும். உங்கள் வளர்ச்சி யோசனைகளை எங்களுடன் பகிர்ந்து கொண்டதற்கு முன்கூட்டியே நன்றி! "
+        }
+    }
+}
