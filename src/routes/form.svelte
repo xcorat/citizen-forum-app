@@ -4,13 +4,18 @@
     import { required, email as email_validator } from 'svelte-forms/validators';
   
     const name = field('name', '', [required()]);
-    const email = field('email', '', [required(), email_validator()]);
+
+    const digIDProvider = field('digIDProvider', '', [required()]);
+    const digID = field('digID', '', [required()]);
+    //const email = field('email', '', [required(), email_validator()]);
+    
     const topic = field('topic', '', [required()]);
     const title = field('title', '', [required()]);
     const post = field('post', '', [required()]);
-  
-    const npForm = form(name, email, topic, title, post);
-
+    
+    const npForm = form(name, digIDProvider, digID, topic, title, post);
+    
+    const digIDPs = ["email", "phone", "facebook", "twitter"];
     const topics = [{
         value: "banking",
         label: "Banking, Finance, & Financial Services"
@@ -42,11 +47,12 @@
     ]
 
     const submitHandler = () => {
-        console.log($npForm.hasError)
+        npForm.validate();
+        console.log($npForm)
     }
   </script>
   
-<section>
+<section class="m-5 max-w-2xl ">
 <!-- svelte-ignore component-name-lowercase -->
 <form on:submit|preventDefault={submitHandler}>
     <div class="form-control">
@@ -61,15 +67,28 @@
     </div>
 
     <div class="form-control">
-        <label class="label" for="npform-email">
-            <span class="label-text">Email</span>
+        <label class="label" for="npform-digIDProvider">
+            <span class="label-text">Digital identity</span>
+        </label>
+        <Select inputStyles="select select-bordered" items={digIDPs} 
+            placeholder="Phone/Email/Facebook etc.."
+            bind:value={$digIDProvider.value} id="npform-digIDProvider">
+        </Select>
+        {#if $npForm.hasError('digIDProvider.required')}
+            <div class="validate-error">Digital ID is required</div>
+        {/if}
+    </div>
+
+    <div class="form-control">
+        <label class="label" for="npform-digID">
+            <span class="label-text">Digital Identity link</span>
         </label>
         <input type="text" placeholder="aragalakarie@gotagogama.lk" class="input input-bordered"
-            bind:value={$email.value} id="npform-email">  
-        {#if $npForm.hasError('email.required')}
-            <div class="validate-error">Email is required</div>
-        {:else if $npForm.hasError('email.not_an_email')}
-            <div class="validate-error">Not an email</div>
+            bind:value={$digID.value} id="npform-digID">  
+        {#if $npForm.hasError('digID.required')}
+            <div class="validate-error">Digital Identity link is required</div>
+        <!-- {:else if $npForm.hasError('email.not_an_email')}
+            <div class="validate-error">Not an email</div> -->
         {/if}
     </div>
 
@@ -106,7 +125,8 @@
         {/if}   
     </div>
     <div class="content-center">
-        <button class="btn mt-10" on:click={npForm.validate}>Submit</button>
+        <button class="btn mt-10" disabled={!$npForm.valid}
+            on:click={submitHandler}>Submit</button>
     </div>
 </form>
 </section>
