@@ -82,6 +82,7 @@
 
     const submitHandler = () => {
         npForm.validate();
+        if(!$npForm.valid) return;
 
         const vals = get(npForm).summary;
 
