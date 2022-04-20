@@ -5,9 +5,6 @@
                      {name: 'si_LK', label: 'SI'},
                      {name: 'ta_LK', label: 'TA'} ];
 
-    // TODO: this shouldn't be needed? do we need to wait for load to be done?
-    $locale = locales[0].name;
-
 </script>
 
 

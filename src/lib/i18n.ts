@@ -1,4 +1,6 @@
-import { register, init, getLocaleFromNavigator } from 'svelte-i18n';
+import { register, init, getLocaleFromNavigator, locale } from 'svelte-i18n';
+
+locale.set('en_GB');
 
 register('en_GB', () => import('../data/translations.json').then( module => module.en_GB));
 register('si_LK', () => import('../data/translations.json').then( module => module.si_LK));
