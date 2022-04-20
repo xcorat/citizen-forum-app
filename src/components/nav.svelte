@@ -23,7 +23,7 @@
     </div>
     <a href="/" class="normal-case text-xl">{$_('app_title')}</a>
     <div class="flex-none hidden lg:block">
-        <ul class="menu menu-horizontal p-0">
+        <ul class="menu menu-horizontal p-5">
             <li><a href="/form">{$_('nav.fill')}</a></li>
             <li><a href="/responses">{$_('nav.read_responses')}</a></li>
         </ul>
