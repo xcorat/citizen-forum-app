@@ -1,7 +1,20 @@
 <script>
     //import runSample from '../lib/forms_api.js.bak'
     import { onMount } from 'svelte';
+    import { dictionary, _ } from 'svelte-i18n';
     import { responses } from '../stores/responsesStore';
+
+    // Update the translations dictionary for this page
+    dictionary.update( (dict) => {
+        // English is not populated fully, as the default values are set to english
+        dict.en_GB['responses'] = { "citizen_sugg": "Citizen Suggestions"  };
+        dict.si_LK['responses'] = {
+            "citizen_sugg": "පුරවැසි අදහස්",
+            "read_more": "තවත් කියවන්න" };
+        dict.ta_LK['responses'] = {        };
+
+        return dict;
+    })
 
     function resizeGridItem(item){
         let grid = document.getElementsByClassName("masonry-grid")[0];
@@ -25,21 +38,24 @@
     })
 
     const res = $responses;
+    
 
 </script>
 
-<h1>Citizen Suggestions</h1>
+<h1 class="page-title m-10 text-3xl">{$_('responses.citizen_sugg', { default: 'Citizen Suggestions' })}</h1>
 <div class="masonry-grid">
     {#each res as item}
     <div class="item blog">
-        <div class="card bg-base-100 shadow-xl content">
+        <div class="card bg-base-100 shadow-xl content" class:trunc={item.truncated}>
             <div class="card-body">
                 <h2 class="card-title">{item.topic}</h2>
                 <p>{@html item.exerpt.replace(/\n/g, '<br>')}</p>
                 <div class="card-author">by {item.author}</div>
                 {#if item.truncated}
                     <div class="card-actions justify-center">
-                        <a href="/post/{item.index}" class="btn btn-primary">Read More</a>
+                        <a href="/post/{item.index}" class="btn btn-primary">
+                            {$_('responses.read_more', { default: 'Read More' })}
+                        </a>
                     </div>
                 {/if}   
             </div>
@@ -57,12 +73,18 @@
    grid-auto-rows: 100px;
 }
 
-.trunc {
-    color: red;
+/** Longer posts are truncated, and is marked with `trunc` class */
+/* .trunc .card-actions {
+    background-color: red;
     overflow-y: hidden  ;
-}
+} */
 
 .card-author {
     text-align: right;
+}
+
+/** DEBUG */
+.page-title {
+    border-bottom: 1px;
 }
 </style>

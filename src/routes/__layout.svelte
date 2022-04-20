@@ -11,7 +11,7 @@
 <!--
 	TODO: The drawer doesn't close after clicking th second time. Debug?
 -->
-<div class='max-w-6xl mx-auto bg-base-100 min-h-screen'>
+<div class='max-w-6xl mx-auto bg-base-100 '>
 	<div class="drawer">
 		<input id="nav-drawer-1" type="checkbox" class="drawer-toggle"> 
 		<div class="drawer-content flex flex-col">
