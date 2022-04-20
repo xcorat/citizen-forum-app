@@ -1,0 +1,187 @@
+{
+    "agri_fish_forest_primary_ed": {
+        "label": {
+            "en_GB": "Agriculture, Fisheries, Forestry, and Primary Production",
+            "ta_LK": "மீன்பிடி, வனவியல் மற்றும் முதன்மை உற்பத்தி விவசாயம், மீன்பிடி, வனவியல் மற்றும் முதன்மை உற்பத்தி",
+            "si_LK": "කෘෂිකර්මය, ධීවර, දැව සහ ප්‍රාථමික කර්මාන්ත"
+        },
+        "bg_color": "0xffffff"
+    },
+    "arts_sports_entert": {
+        "label": {
+            "en_GB": "Arts, Sports, and Entertainment",
+            "ta_LK": "கலை விளையாட்டு மற்றும் பொழுதுபோக்கு",
+            "si_LK": "කලා, ක්‍රීඩා සහ විනෝදාස්වාද කටයුතු"
+        },
+        "bg_color": "0xffffff"
+    },
+    "bank_fin": {
+        "label": {
+            "en_GB": "Banking, Finance, & Financial Services",
+            "ta_LK": "வங்கி நிதி மற்றும் நிதிச் சேவைகள்",
+            "si_LK": "බැංකු, මූල්‍ය හා මූල්‍ය සේවා"
+        },
+        "bg_color": "0xffffff"
+    },
+    "foreign_rel": {
+        "label": {
+            "en_GB": "Diplomacy and Foreign Relations",
+            "ta_LK": "இராஜதந்திரம் மற்றும் வெளிநாட்டு உறவுகள்",
+            "si_LK": "රාජ්‍ය තාන්ත්‍රික කටයුතු හා විදේශ සබඳතා"
+        },
+        "bg_color": "0xffffff"
+    },
+    "consumer_trade": {
+        "label": {
+            "en_GB": "Consumer and Trade",
+            "ta_LK": "நுகர்வோர் மற்றும் சில்லறை வணிகம்",
+            "si_LK": "පාරිභෝගික හා වෙළෙඳාම්"
+        },
+        "bg_color": "0xffffff"
+    },
+    "culture_heritage": {
+        "label": {
+            "en_GB": "Culture and Heritage",
+            "ta_LK": "கலாச்சாரம் மற்றும் பாரம்பரியம்",
+            "si_LK": "සංස්කෘතිය හා උරුමයන්"
+        },
+        "bg_color": "0xffffff"
+    },
+    "edu_proff_training": {
+        "label": {
+            "en_GB": "Education, Professions, and Training",
+            "ta_LK": "கல்வி தொழில் வளர்ச்சி மற்றும் பயிற்சி",
+            "si_LK": "අධ්‍යාපන, වෘත්තීය හා පුහුණු කටයුතු"
+        },
+        "bg_color": "0xffffff"
+    },
+    "energy": {
+        "label": {
+            "en_GB": "Energy and Power ",
+            "ta_LK": "ஆற்றல் மற்றும் சக்தி",
+            "si_LK": "බලශක්තිය හා ඉන්ධන"
+        },
+        "bg_color": "0xffffff"
+    },
+    "health": {
+        "label": {
+            "en_GB": "Health and Wellness",
+            "ta_LK": "உடல் மற்றும் ஆரோக்கியம்",
+            "si_LK": "සෞඛ්‍ය හා යහපැවැත්ම"
+        },
+        "bg_color": "0xffffff"
+    },
+    "housing_property_dev": {
+        "label": {
+            "en_GB": "Housing, Construction, Real Estate & Property Development",
+            "ta_LK": "வீட்டு கட்டுமானம் மற்றும் ரியல் எஸ்டேட்",
+            "si_LK": "නිවාස, ඉදිකිරීම් හා දේපළ"
+        },
+        "bg_color": "0xffffff"
+    },
+    "manufacturing": {
+        "label": {
+            "en_GB": "Industrial & Manufacturing ",
+            "ta_LK": "தொழில்துறை உற்பத்தி",
+            "si_LK": "කාර්මික හා නිෂ්පාදන කටයුතු"
+        },
+        "bg_color": "0xffffff"
+    },
+    "ict": {
+        "label": {
+            "en_GB": "Information & Communication Technology",
+            "ta_LK": "தகவல் தொடர்பு மற்றும் தொழில்நுட்பம்",
+            "si_LK": "තොරතුරු හා සන්නිවේදන තාක්ෂණය"
+        },
+        "bg_color": "0xffffff"
+    },
+    "life_rec": {
+        "label": {
+            "en_GB": "Lifestyle, Leisure, and Recreation",
+            "ta_LK": "வாழ்க்கை முறை பொழுதுபோக்கு மற்றும் ஓய்வு",
+            "si_LK": "ජීවන රටාව හා විවේකය"
+        },
+        "bg_color": "0xffffff"
+    },
+    "law": {
+        "label": {
+            "en_GB": "Law and Order",
+            "ta_LK": "சட்டம்  மற்றும் ஒழுங்கு",
+            "si_LK": "නීතිය හා සාමය"
+        },
+        "bg_color": "0xffffff"
+    },
+    "natsec_intel": {
+        "label": {
+            "en_GB": "National Security and Intelligence",
+            "ta_LK": "தேசிய பாதுகாப்பு மற்றும் உளவுத்துறை",
+            "si_LK": "ජාතික ආරක්ෂාව හා බුද්ධිමය කටයුතු"
+        },
+        "bg_color": "0xffffff"
+    },
+    "publishing": {
+        "label": {
+            "en_GB": "Media & Publishing",
+            "ta_LK": "ஊடகம் மற்றும் வெளியீடு",
+            "si_LK": "මාධ්‍ය හා මුද්‍රණ"
+        },
+        "bg_color": "0xffffff"
+    },
+    "pub_utils_services": {
+        "label": {
+            "en_GB": "Public Utilities and Services",
+            "ta_LK": "பொது பயன்பாடுகள் மற்றும் சேவைகள்",
+            "si_LK": "පොදු යටිතල පහසුකම් හා සේවා"
+        },
+        "bg_color": "0xffffff"
+    },
+    "social_dev": {
+        "label": {
+            "en_GB": "Social Reforms and Inclusive Development",
+            "ta_LK": "சமூக சீர்திருத்தங்கள் மற்றும் சேர்த்தல்",
+            "si_LK": "සමාජ ප්‍රතිශෝධන හා සියලුදෙනා ඇතුළත් කරගත් සංවර්ධනය"
+        },
+        "bg_color": "0xffffff"
+    },
+    "transport_logistics": {
+        "label": {
+            "en_GB": "Transportation, Logistics, and Mobility",
+            "ta_LK": "போக்குவரத்து தளவாடங்கள் மற்றும் இயக்கம்",
+            "si_LK": "ප්‍රවාහනය හා සැපයුම් පහසුකම්"
+        },
+        "bg_color": "0xffffff"
+    },
+    "tourism": {
+        "label": {
+            "en_GB": "Travel, Tourism, and Hospitality",
+            "ta_LK": "சுற்றுலா மற்றும் விருந்தோம்பல்",
+            "si_LK": "සංචාරක කර්මාන්තය"
+        },
+        "bg_color": "0xffffff"
+    },
+    "nat_resources_climate_action": {
+        "label": {
+            "en_GB": "Natural Resources & Climate Action",
+            "ta_LK": "தேசிய வளம் மற்றும் காலநிலை நடவடிக்கை",
+            "si_LK": "ස්වභාවික සම්පත් හා කාළගුණ විපර්යාස"
+        },
+        "bg_color": "0xffffff"
+    },
+    "social_welfare": {
+        "label": {
+            "en_GB": "Welfare / Social Safety Net",
+            "ta_LK": "பொதுநல சமூக சேவை/  சமூக பாதுகாப்பு",
+            "si_LK": "සුබසාධන හා සමාජ ආරක්ෂණ කටයුතු"
+        },
+        "bg_color": "0xffffff"
+    },
+    "o23": {
+        "label": {
+            "en_GB": "Option 23",
+            "ta_LK": "Option 23",
+            "si_LK": "Option 23"
+        },
+        "bg_color": "0xffffff"
+    }
+
+}
