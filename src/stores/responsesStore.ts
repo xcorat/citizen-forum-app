@@ -13,6 +13,23 @@ const defaultResponse = {
     truncated: false,
 }
 
+function updateLocalResponses(res){
+    let post: string = '#' + res.title + '#' + '\n' + res.post;
+    // TODO: This localization doesn't give results in sinhala
+    let tstamp: string = (new Date()).toLocaleString('si-LK');
+
+    let response = {
+        "කාල මුද්‍රාව": tstamp,
+        "ඔබේ නම / your name / உங்கள் பெயர்": res.name,
+        "ඩිජිටල් අනන්‍යතාව / Digital identity / டிஜிட்டல் அடையாளம்": res.digIDProvider,
+        "ඩිජිටල් අනන්‍යතා සබැඳිය (ඊමේල් ලිපිනය, දුරකථන අංකය හෝ සමාජ මාධ්‍ය සබැඳිය) / Digital identity link (email address, phone number, or social media link) / டிஜிட்டல் அடையாளம் (email, தொலைபேசி எண் அல்லது சமூக ஊடகம் link)": res.digID,
+        "විෂයපථය / Subject area / பொருள் பகுதி": res.topic,
+        "ඔබේ යෝජනා / Your suggestions / உங்கள் பரிந்துரைகள்": post,
+    }
+
+    return response;
+}
+
 function formatResponse(res, index){
     let response = {
         index: index,
@@ -49,8 +66,9 @@ function createResponsesStore() {
     set(createResponseArray());
 
     function insert(res) {
+        const updatedResponse = updateLocalResponses(res);
         update((resArray) => {
-            const formattedResponse = formatResponse(res, resArray.length);
+            const formattedResponse = formatResponse(updatedResponse, resArray.length);
             resArray.push(formattedResponse);
 
             return resArray;

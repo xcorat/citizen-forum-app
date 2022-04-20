@@ -2,6 +2,8 @@
     import { form, field } from 'svelte-forms';
     import Select from 'svelte-select';
     import { required, email as email_validator } from 'svelte-forms/validators';
+    import { responses } from '../stores/responsesStore'
+    import { get } from 'svelte/store';
   
     const name = field('name', '', [required()]);
 
@@ -48,7 +50,18 @@
 
     const submitHandler = () => {
         npForm.validate();
-        console.log($npForm)
+
+        const vals = get(npForm).summary;
+
+        responses.insert({
+            name: vals.name, 
+            digIDProvider: vals.digIDProvider.label,
+            digID: vals.digID,
+            topic: vals.topic.label,
+            title: vals.title,
+            post: vals.post,
+        })
+        npForm.reset();
     }
   </script>
   
@@ -125,8 +138,7 @@
         {/if}   
     </div>
     <div class="content-center">
-        <button class="btn mt-10" disabled={!$npForm.valid}
-            on:click={submitHandler}>Submit</button>
+        <button class="btn mt-10" disabled={!$npForm.valid}>Submit</button>
     </div>
 </form>
 </section>
