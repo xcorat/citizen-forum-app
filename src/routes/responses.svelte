@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
     //import runSample from '../lib/forms_api.js.bak'
     import { onMount } from 'svelte';
     import { dictionary, _ } from 'svelte-i18n';
@@ -38,13 +38,32 @@
     })
 
     const res = $responses;
-    
+
+    const postsPerPage = 25;
+    let displayIndices = {start: 0, end: postsPerPage};
+    let displayed = res.slice(displayIndices.start, displayIndices.end);
+
+    function loadMore(newer: boolean = true, len: number = postsPerPage) {
+        if(newer) {
+            displayIndices.end = (displayIndices.end + len < res.length)?
+                                    displayIndices.end + len: res.length;
+            displayIndices.start = displayIndices.end - len; 
+        }
+        else {
+            displayIndices.start = (displayIndices.start < len)? 0: displayIndices.start - len;
+            displayIndices.end = displayIndices.start + len; 
+        }
+        displayed = res.slice(displayIndices.start, displayIndices.end);
+        // TODO: update the grid layout when it's done drawing instead of a timeout
+        setTimeout(() => resizeAllGridItems(), 300);
+    }
+
 
 </script>
 
 <h1 class="page-title m-10 text-3xl">{$_('responses.citizen_sugg', { default: 'Citizen Suggestions' })}</h1>
 <div class="masonry-grid">
-    {#each res as item}
+    {#each displayed as item}
     <div class="item blog">
         <div class="card bg-base-100 shadow-xl content" class:trunc={item.truncated}>
             <div class="card-body">
@@ -62,6 +81,14 @@
         </div>
     </div>
     {/each}
+</div>
+<div class="m-10 flex justify-center">
+    <button class="btn  m-5" on:click={() => { loadMore(false) }} disabled={displayIndices.start < 1}>
+        Previous
+    </button>
+    <button class="btn m-5" on:click={() => { loadMore(true) }} disabled={displayIndices.end >= res.length}>
+        Next
+    </button>
 </div>
 
 
