@@ -16,6 +16,7 @@
         return dict;
     })
 
+    // TODO: Move the mosaic js to a seperate file/library
     function resizeGridItem(item){
         let grid = document.getElementsByClassName("masonry-grid")[0];
         let rowHeight = parseInt(window.getComputedStyle(grid).getPropertyValue('grid-auto-rows'));
@@ -24,7 +25,6 @@
         item.style.gridRowEnd = "span "+rowSpan;
 
     }
-
     function resizeAllGridItems(){
         let allItems = document.getElementsByClassName("item");
         for(let x=0; x<allItems.length; x++){
@@ -39,6 +39,8 @@
 
     const res = $responses;
 
+    // TODO: Create a separate store to implement pagination. Possibly a derived store
+    //      that we can use in different pages with different lengths
     const postsPerPage = 25;
     let displayIndices = {start: 0, end: postsPerPage};
     let displayed = res.slice(displayIndices.start, displayIndices.end);
