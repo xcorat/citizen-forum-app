@@ -36,7 +36,7 @@
         // TODO: Just a quick debug, see how to fix this properly
         let contentDiv = item.querySelector('.content');
         if(!contentDiv) {
-            console.log("ERROR", item)
+            console.log("ERROR: ", item)
             return;
         }
         let rowSpan = Math.ceil((contentDiv.getBoundingClientRect().height+rowGap)/(rowHeight+rowGap));
@@ -58,6 +58,7 @@
     // TODO: we can probably use `MutationObserver` to do this..
     function updatePostsList(posts){
         // TODO: update the grid layout when it's done drawing instead of a timeout
+        displayIndices = {start: 0, end: numDisplayed};
         if(mountDone) setTimeout(() => resizeAllGridItems(), 300);
         return posts.slice(displayIndices.start, displayIndices.end);
     }
@@ -74,10 +75,9 @@
             displayIndices.start = (displayIndices.start < len)? 0: displayIndices.start - len;
             displayIndices.end = displayIndices.start + len; 
         }
-        updatePostsList(posts);
-        // displayed = posts.slice(displayIndices.start, displayIndices.end);
+        displayed = posts.slice(displayIndices.start, displayIndices.end);
         // TODO: update the grid layout when it's done drawing instead of a timeout
-        // setTimeout(() => resizeAllGridItems(), 300);
+        setTimeout(() => resizeAllGridItems(), 300);
     }
 
     onMount(() => {
@@ -121,7 +121,7 @@
     .masonry-grid {
        display: grid;
        grid-gap: 10px;
-       grid-template-columns: repeat(auto-fill, minmax(350px,1fr));
+       grid-template-columns: repeat(auto-fill, minmax(330px,1fr));
        grid-auto-rows: 100px;
     }
     
