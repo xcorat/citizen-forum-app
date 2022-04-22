@@ -1,17 +1,16 @@
-# create-svelte
+# Citizen Forum App
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte).
+Web app for the citizen forum, sparked by the GotaGoHome2022 protests
 
-## Creating a project
-
-If you're seeing this, you've probably already done this step. Congrats!
+## How to test
 
 ```bash
-# create a new project in the current directory
-npm init svelte
+# clone the git repository
+git clone https://github.com/xcorat/citizen-forum-app.git citizen-forum-test
 
-# create a new project in my-app
-npm init svelte my-app
+# install the app
+npm install
+
 ```
 
 ## Developing
@@ -35,4 +34,7 @@ npm run build
 
 You can preview the production build with `npm run preview`.
 
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
+## Contribute
+
+Help us develop this app, reach out at github or via email ([sachi](sachinthya.wagaarachchi@gmail.com)) or message [xcorat at Element.io](https://matrix.to/#/@xcorat:matrix.org)
+
