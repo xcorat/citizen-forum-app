@@ -1,4 +1,4 @@
-<div id="footer" class="p-10 bg-neutral text-center">
+<div id="footer" class="p-10 bg-neutral text-center text-neutral-content">
     <div>
         This web app is developed collaboratively. Contribute at the
         <a href="https://github.com/xcorat/citizen-forum-app" class="link"> Github repository</a>
