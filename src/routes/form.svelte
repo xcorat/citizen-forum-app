@@ -5,14 +5,12 @@
     import { responses } from '../stores/responsesStore'
     import { get } from 'svelte/store';
     import { dictionary, _ , locale} from 'svelte-i18n';
+
     import topics_settings from '../data/topics_settings.json';
+    import TranslatableSelect from '../components/translatableSelect.svelte';
     
     // TODO: read this from the path?
     const page_id = 'form'
-
-    // Don't subscribe, this keeps track of the locale of the page, so we can update
-    //      the topics list when the user changes the locale settings.
-    let currentLocale = get(locale);
 
     // The dictionary with translations strings for this page.
     dictionary.update( (dict) => {
@@ -60,31 +58,13 @@
     const npForm = form(name, digIDProvider, digID, topic, title, post);
     
     const digIDPs = ["email", "phone", "facebook", "twitter"];
-    const topics = []
-    // Read the topics list from JSON
-    for (const [key, value] of Object.entries(topics_settings)) {
-        topics.push({
-            value: key,
-            label: value.label[currentLocale]
-        })
-    }
-
-    // Change the topics list labels when the locale changes
-    locale.subscribe((loc) => {
-        // Update only if the locale has changed
-        if(loc == currentLocale) return;
-        topics.forEach((topicVal) => {
-            topicVal.label = get(dictionary)[loc].topics[topicVal.value]
-        });
-        currentLocale = loc;
-    });
-
 
     const submitHandler = () => {
         npForm.validate();
         if(!$npForm.valid) return;
 
         const vals = get(npForm).summary;
+        console.log(vals);
 
         responses.insert({
             name: vals.name, 
@@ -151,11 +131,7 @@
             <span class="label-text">
                 {$_(page_id+'.topic', { default: 'Topic' })}</span>
         </label>
-        <Select inputStyles="select select-bordered" items={topics}
-            placeholder="Select topic"
-            bind:value={$topic.value} id="npform-topic">  
-        </Select>
-
+        <TranslatableSelect item_settings={topics_settings} bind:value={$topic.value}/>
         {#if $npForm.hasError('topic.required')}
             <div class="validate-error">Topic is required</div>
         {/if}
