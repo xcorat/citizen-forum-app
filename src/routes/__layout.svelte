@@ -1,10 +1,11 @@
 <script>
 	import '../app.css';
 
-    import { dictionary, locale, _ } from 'svelte-i18n';
+    import { _ } from 'svelte-i18n';
 
 	import '../lib/i18n';
     import Nav from "../components/nav.svelte"
+	import Footer from '../components/footer.svelte';
 
 	// TODO: this shouldn't be needed? do we need to wait for load to be done?
 
@@ -20,6 +21,8 @@
 		<div class="drawer-content flex flex-col">
 			<Nav/>
 			<slot></slot>
+
+			<Footer/>
 		</div>
 		<div class="drawer-side">
 			<label for="nav-drawer-1" class="drawer-overlay"></label> 
