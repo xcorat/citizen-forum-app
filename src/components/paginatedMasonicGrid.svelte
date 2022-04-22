@@ -12,12 +12,9 @@
 
     // Update the translations dictionary for this page
     dictionary.update( (dict) => {
-        // English is not populated fully, as the default values are set to english
-        dict.en_GB['responses'] = { "citizen_sugg": "Citizen Suggestions"  };
-        dict.si_LK['responses'] = {
-            "citizen_sugg": "පුරවැසි අදහස්",
-            "read_more": "තවත් කියවන්න" };
-        dict.ta_LK['responses'] = {        };
+        dict.si_LK['read_more'] = "තවත් කියවන්න" ;
+        // TODO: correct?
+        dict.ta_LK['read_more'] = "மேலும் படிக்க" ;
 
         dict.en_GB['topics'] = {};
         dict.si_LK['topics'] = {};
@@ -48,7 +45,6 @@
     }
     function resizeAllGridItems(){
         let allItems = document.getElementsByClassName("item");
-        console.log(allItems);
         for(let x=0; x<allItems.length; x++){
             resizeGridItem(allItems[x]);
         }
@@ -92,19 +88,18 @@
 
 </script>
 
-<h1 class="page-title m-10 text-3xl">{$_('responses.citizen_sugg', { default: 'Citizen Suggestions' })}</h1>
 <div class="masonry-grid">
     {#each displayed as item}
     <div class="item blog">
         <div class="card bg-base-100 shadow-xl content" class:trunc={item.truncated}>
-            <div class="card-body">
+            <div class="card-body"> 
                 <h2 class="card-title">{$_('topics.'+item.topicID)}</h2>
                 <p>{@html item.exerpt.replace(/\n/g, '<br>')}</p>
                 <div class="card-author">by {item.author}</div>
                 {#if item.truncated}
                     <div class="card-actions justify-center">
                         <a href="/post/{item.index}" class="btn btn-primary">
-                            {$_('responses.read_more', { default: 'Read More' })}
+                            {$_('read_more', { default: 'Read More' })}
                         </a>
                     </div>
                 {/if}   

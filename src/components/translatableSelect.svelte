@@ -45,7 +45,8 @@
         // Update only if the locale has changed
         if(loc == currentLocale) return;
         items.forEach((item) => {
-            item.label = get(dictionary)[loc].topics[item.value]
+            // TODO: Another bad call.. just fix later
+            item.label = item_settings[item.value].label[loc]
         });
         currentLocale = loc;
     });
