@@ -1,4 +1,11 @@
 <script>
+    /**
+     * TODO: Proper documentation
+     * TODO: if an element with `{orderingID: 0}` exists in the list, 
+     *      that element will take the first position. Implement this more
+     *      comprehensively.
+     * 
+    */
     import Select from 'svelte-select';
     import { dictionary, _ , locale} from 'svelte-i18n';
     import { get } from 'svelte/store';
@@ -14,10 +21,18 @@
     // Read the topics list from JSON with schema:
     // { key: {label: {en_GB: "english", "ta_LK": "tamil", "si_LK": "sinhala"} }}
     for (const [key, value] of Object.entries(item_settings)) {
-        items.push({
-            value: key,
-            label: value.label[currentLocale]
-        })
+        if(value.orderingID === 0) {
+            items.unshift({
+                value: key,
+                label: value.label[currentLocale]
+            });
+        }
+        else {
+            items.push({
+                value: key,
+                label: value.label[currentLocale]
+            })
+        }
     }
 
     // Change the topics list labels when the locale changes
@@ -35,5 +50,5 @@
 
 <Select inputStyles="select select-bordered" items={items}
     placeholder="Select topic"
-    bind:value={value} id="npform-topic">  
+    bind:value={value} id="responses-topic">  
 </Select>
