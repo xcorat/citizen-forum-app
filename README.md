@@ -36,5 +36,5 @@ You can preview the production build with `npm run preview`.
 
 ## Contribute
 
-Help us develop this app, reach out at github or via email [sachi](sachinthya.wagaarachchi@gmail.com) or message [xcorat at Element.io](https://matrix.to/#/@xcorat:matrix.org)
+Help us develop this app, reach out at github or via email ([sachi](sachinthya.wagaarachchi@gmail.com)) or message [xcorat at Element.io](https://matrix.to/#/@xcorat:matrix.org)
 
