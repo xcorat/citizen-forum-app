@@ -1,5 +1,7 @@
 // functions needed to sanitize the proposals between local form and db/JSON
 
+import topics_settings from "../data/topics_settings.json"
+
 /**
  * 
  * @param res 
@@ -23,6 +25,19 @@ export function updateLocalResponses(res){
 }
 
 export function formatResponse(res, index){
+    const topic_alllang = res["විෂයපථය / Subject area / பொருள் பகுதி"];
+    let topicID;
+    for(const [key, value] of Object.entries(topics_settings)){
+        // Just check the ennglish version. 
+        if(topic_alllang.indexOf(value.label.en_GB) != -1){
+            topicID = key;
+            break;
+        };
+        // TODO: use `o23` as generic topic in case of error
+        topicID = 'o23';
+    }
+    const topic = (topics_settings) => { }
+
     let response = {
         index: index,
         timestamp: res["කාල මුද්‍රාව"],
@@ -30,6 +45,7 @@ export function formatResponse(res, index){
         digitalIDProvider: res["ඩිජිටල් අනන්‍යතාව / Digital identity / டிஜிட்டல் அடையாளம்"],
         id: res["ඩිජිටල් අනන්‍යතා සබැඳිය (ඊමේල් ලිපිනය, දුරකථන අංකය හෝ සමාජ මාධ්‍ය සබැඳිය) / Digital identity link (email address, phone number, or social media link) / டிஜிட்டல் அடையாளம் (email, தொலைபேசி எண் அல்லது சமூக ஊடகம் link)"],
         topic: res["විෂයපථය / Subject area / பொருள் பகுதி"],
+        topicID: topicID,
         post: res["ඔබේ යෝජනා / Your suggestions / உங்கள் பரிந்துரைகள்"],
         exerpt: '',
         truncated: false,

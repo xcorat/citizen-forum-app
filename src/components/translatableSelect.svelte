@@ -9,6 +9,7 @@
     import Select from 'svelte-select';
     import { dictionary, _ , locale} from 'svelte-i18n';
     import { get } from 'svelte/store';
+    import { createEventDispatcher } from 'svelte';
 
     export let item_settings;
     export let value;
@@ -16,6 +17,10 @@
     // Don't subscribe, this keeps track of the locale of the page, so we can update
     //      the topics list when the user changes the locale settings.
     let currentLocale = get(locale);
+
+    // To send the input selected message to the top controller. This is used by the 
+    //  pagination component
+    const dispatch = createEventDispatcher();
 
     const items = []
     // Read the topics list from JSON with schema:
@@ -50,5 +55,6 @@
 
 <Select inputStyles="select select-bordered" items={items}
     placeholder="Select topic"
-    bind:value={value} id="responses-topic">  
+    bind:value={value} id="responses-topic"
+    on:select={() => dispatch('select')}>  
 </Select>

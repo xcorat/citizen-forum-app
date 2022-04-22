@@ -1,6 +1,6 @@
 import {writable} from 'svelte/store'
 import responsesJSON from '../data/citizen_forum_data_nocontact_1.json';
-import { formatResponse, updateLocalResponses } from '../lib/format_proposals';
+import { formatResponse, updateLocalResponses } from '../lib/format_posts'
 
 const defaultResponse = {
     index: 0,
@@ -9,6 +9,7 @@ const defaultResponse = {
     digitalIDProvider: 'none',
     id: 'none',
     topic: '',
+    topicID: '',
     post: '',
     exerpt: '',
     truncated: false,

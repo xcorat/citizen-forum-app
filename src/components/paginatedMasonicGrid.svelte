@@ -2,8 +2,13 @@
     import { onMount } from 'svelte';
     import { dictionary, _ } from 'svelte-i18n';
 
+    import topics_settings from '../data/topics_settings.json';
+
     export let numDisplayed = 25;
     export let posts = [];
+
+    // TODO: fucking terrible way to detect component mount but dont care, fix later
+    let mountDone = false;
 
     // Update the translations dictionary for this page
     dictionary.update( (dict) => {
@@ -14,27 +19,54 @@
             "read_more": "තවත් කියවන්න" };
         dict.ta_LK['responses'] = {        };
 
+        dict.en_GB['topics'] = {};
+        dict.si_LK['topics'] = {};
+        dict.ta_LK['topics'] = {};
+        for (const [key, value] of Object.entries(topics_settings)) {
+            dict.en_GB['topics'][key] = value.label.en_GB;
+            dict.si_LK['topics'][key] = value.label.si_LK;
+            dict.ta_LK['topics'][key] = value.label.ta_LK;
+        }  
+
         return dict;
     })
 
-        // TODO: Move the mosaic js to a seperate file/library
-        function resizeGridItem(item){
+    // TODO: Move the mosaic js to a seperate file/library
+    function resizeGridItem(item){
         let grid = document.getElementsByClassName("masonry-grid")[0];
         let rowHeight = parseInt(window.getComputedStyle(grid).getPropertyValue('grid-auto-rows'));
         let rowGap = parseInt(window.getComputedStyle(grid).getPropertyValue('grid-row-gap'));
-        let rowSpan = Math.ceil((item.querySelector('.content').getBoundingClientRect().height+rowGap)/(rowHeight+rowGap));
+        // TODO: Just a quick debug, see how to fix this properly
+        let contentDiv = item.querySelector('.content');
+        if(!contentDiv) {
+            console.log("ERROR", item)
+            return;
+        }
+        let rowSpan = Math.ceil((contentDiv.getBoundingClientRect().height+rowGap)/(rowHeight+rowGap));
         item.style.gridRowEnd = "span "+rowSpan;
 
     }
     function resizeAllGridItems(){
         let allItems = document.getElementsByClassName("item");
+        console.log(allItems);
         for(let x=0; x<allItems.length; x++){
             resizeGridItem(allItems[x]);
         }
     }
 
     let displayIndices = {start: 0, end: numDisplayed};
-    let displayed = posts.slice(displayIndices.start, displayIndices.end);
+    let displayed = [];
+
+    // TODO: this is on a seperate function call so we can call the redrawing of
+    //  posts whwnever the posts change
+    // TODO: we can probably use `MutationObserver` to do this..
+    function updatePostsList(posts){
+        // TODO: update the grid layout when it's done drawing instead of a timeout
+        if(mountDone) setTimeout(() => resizeAllGridItems(), 300);
+        return posts.slice(displayIndices.start, displayIndices.end);
+    }
+    
+    $: displayed = updatePostsList(posts);
 
     function loadMore(newer: boolean = true, len: number = numDisplayed) {
         if(newer) {
@@ -46,14 +78,16 @@
             displayIndices.start = (displayIndices.start < len)? 0: displayIndices.start - len;
             displayIndices.end = displayIndices.start + len; 
         }
-        displayed = posts.slice(displayIndices.start, displayIndices.end);
+        updatePostsList(posts);
+        // displayed = posts.slice(displayIndices.start, displayIndices.end);
         // TODO: update the grid layout when it's done drawing instead of a timeout
-        setTimeout(() => resizeAllGridItems(), 300);
+        // setTimeout(() => resizeAllGridItems(), 300);
     }
 
     onMount(() => {
         resizeAllGridItems();
         window.addEventListener("resize", resizeAllGridItems);
+        mountDone = true;
     })
 
 </script>
@@ -64,7 +98,7 @@
     <div class="item blog">
         <div class="card bg-base-100 shadow-xl content" class:trunc={item.truncated}>
             <div class="card-body">
-                <h2 class="card-title">{item.topic}</h2>
+                <h2 class="card-title">{$_('topics.'+item.topicID)}</h2>
                 <p>{@html item.exerpt.replace(/\n/g, '<br>')}</p>
                 <div class="card-author">by {item.author}</div>
                 {#if item.truncated}
