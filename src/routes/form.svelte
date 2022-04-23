@@ -95,19 +95,27 @@
   </script>
   
 <section class="m-5 max-w-2xl ">
+<div class="alert shadow-lg alert-small">
+    <div>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="stroke-info flex-shrink-0 w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+        <span >Data from this form will automatically be uploaded to the google form.</span>
+    </div>
+</div>
 <!-- svelte-ignore component-name-lowercase -->
-<form on:submit|preventDefault={submitHandler}>
+<form class="mt-5" on:submit|preventDefault={submitHandler}>
     <div class="form-control">
         <label class="label" for="npform-name">
             <span class="label-text">
                 {$_(page_id+'.name', { default: 'Name' })}
             </span>
+            <span class="alert-small" class:text-error={$npForm.hasError('name.required')}>
+                required</span>
         </label>
         <input type="t  ext" placeholder="Your Name" class="input input-bordered"
             bind:value={$name.value} id="npform-name">
-        {#if $npForm.hasError('name.required')}
+        <!-- {#if $npForm.hasError('name.required')}
             <div class="validate-error">Name is required</div>
-        {/if}
+        {/if} -->
     </div>
 
     <div class="form-control">
@@ -115,14 +123,16 @@
             <span class="label-text">
                 {$_(page_id+'.digIDProvider', { default: 'Digital identity' })}
             </span>
+            <span class="alert-small" class:text-error={$npForm.hasError('digIDProvider.required')}>
+                required</span>
         </label>
         <Select inputStyles="select select-bordered" items={digIDPs} 
             placeholder="Phone/Email/Facebook etc.."
             bind:value={$digIDProvider.value} id="npform-digIDProvider">
         </Select>
-        {#if $npForm.hasError('digIDProvider.required')}
+        <!-- {#if $npForm.hasError('digIDProvider.required')}
             <div class="validate-error">Digital ID is required</div>
-        {/if}
+        {/if} -->
     </div>
 
     <div class="form-control">
@@ -130,33 +140,38 @@
             <span class="label-text">
                 {$_(page_id+'.digID', { default: 'Digital Identity link' })}
             </span>
+            <span class="alert-small" class:text-error={$npForm.hasError('digID.required')}>
+                required</span>
         </label>
         <input type="text" placeholder="aragalakarie@gotagogama.lk" class="input input-bordered"
             bind:value={$digID.value} id="npform-digID">  
-        {#if $npForm.hasError('digID.required')}
+        <!-- {#if $npForm.hasError('digID.required')}
             <div class="validate-error">
                 Digital Identity link is required
             </div>
+            {/if} -->
         <!-- {:else if $npForm.hasError('email.not_an_email')}
             <div class="validate-error">Not an email</div> -->
-        {/if}
     </div>
 
     <div class="form-control">
         <label class="label" for="npform-topic">
             <span class="label-text">
-                {$_(page_id+'.topic', { default: 'Topic' })}</span>
+                {$_(page_id+'.topic', { default: 'Topic' })}
+            </span>
+            <span class="alert-small" class:text-error={$npForm.hasError('topic.required')}>required</span>
         </label>
         <TranslatableSelect item_settings={topics_settings} bind:value={$topic.value}/>
-        {#if $npForm.hasError('topic.required')}
+        <!-- {#if $npForm.hasError('topic.required')}
             <div class="validate-error">Topic is required</div>
-        {/if}
+        {/if} -->
     </div>
 
     <div class="form-control">
         <label class="label" for="npform-title">
             <span class="label-text">
-                {$_(page_id+'.title', { default: 'Post Title' })}</span>
+                {$_(page_id+'.title', { default: 'Post Title' })}
+            </span>
         </label>
         <input type="text" placeholder="Short title for the suggestion" class="input input-bordered"
             bind:value={$title.value} id="npform-title">  
@@ -167,12 +182,14 @@
             <span class="label-text">
                 {$_(page_id+'.post', { default: 'Suggestion' })}
             </span>
+            <span class="alert-small" class:text-error={$npForm.hasError('post.required')}>
+                required</span>
         </label>
         <textarea class="textarea textarea-bordered" placeholder="Type your suggestion" 
             bind:value={$post.value} id="npform-post"></textarea>
-        {#if $npForm.hasError('post.required')}
+        <!-- {#if $npForm.hasError('post.required')}
             <div class="validate-error">Post is required</div>
-        {/if}   
+        {/if}    -->
     </div>
     <div class="content-center">
         <button class="btn mt-10" disabled={!$npForm.valid}>
@@ -189,5 +206,9 @@
 
     .form-control {
         margin-bottom: 1em;
+    }
+
+    .alert-small {
+        font-size: small;
     }
 </style>
