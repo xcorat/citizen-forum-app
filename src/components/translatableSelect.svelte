@@ -12,7 +12,9 @@
     import { createEventDispatcher } from 'svelte';
 
     export let item_settings;
+    export let placeholder = undefined;
     export let value;
+    export let id = "default_id";
 
     // Don't subscribe, this keeps track of the locale of the page, so we can update
     //      the topics list when the user changes the locale settings.
@@ -54,8 +56,10 @@
 </script>
 
 
-<Select inputStyles="select select-bordered" items={items}
-    placeholder="Select topic"
-    bind:value={value} id="responses-topic"
+<Select inputStyles="select select-bordered"
+    id={id}
+    items={items}
+    placeholder={placeholder}
+    bind:value={value}
     on:select={() => dispatch('select')}>  
 </Select>

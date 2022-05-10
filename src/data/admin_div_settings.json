@@ -1,0 +1,63 @@
+{
+    "central": {
+        "label": {
+            "en_GB": "Central Province",
+            "ta_LK": "மத்திய மாகாணம்",
+            "si_LK": "මධ්‍යම පළාත"
+        }
+    },
+    "eastern": {
+        "label": {
+            "en_GB": "Eastern Province",
+            "ta_LK": "கிழக்கு மாகாணம்",
+            "si_LK": "නැගෙනහිර පළාත"
+        }
+    },
+    "north_central": {
+        "label": {
+            "en_GB": "North Central Province",
+            "ta_LK": "வடமத்திய மாகாணம்",
+            "si_LK": "උතුරුමැද පළාත"
+        }
+    },
+    "northern": {
+        "label": {
+            "en_GB": "Northern Province",
+            "ta_LK": "வடக்கு மாகாணம்",
+            "si_LK": "උතුරු පළාත"
+        }
+    },
+    "north_western": {
+        "label": {
+            "en_GB": "North Western Province",
+            "ta_LK": "வடமேல் மாகாணம்",
+            "si_LK": "වයඹ පළාත"
+        }
+    },
+    "sabaragamuwa": {
+        "label": {
+            "en_GB": "Sabaragamuwa Province",
+            "ta_LK": "சப்ரகமுவா மாகாணம்",
+            "si_LK": "සබරගමුව"
+        }
+    },
+    "southern": {
+        "label": {
+            "en_GB": "Southern Province",
+            "ta_LK": "தெற்கு மாகாணம்",
+            "si_LK": "දකුණු පළාත"
+        }
+    },"uva": {
+        "label": {
+            "en_GB": "Uva Province",
+            "ta_LK": "ஊவா மாகாணம்",
+            "si_LK": "ඌව පළාත"
+        }
+    },"western": {
+        "label": {
+            "en_GB": "Western Province",
+            "ta_LK": "மேற்கு மாகாணம்",
+            "si_LK": "බස්නාහිර පළාත"
+        }
+    }
+}
