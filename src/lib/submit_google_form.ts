@@ -5,6 +5,8 @@ const googlekey = import.meta.env.VITE_GAPI_KEY as string
 function submitGoogleForm(form_summary) {
     // TODO: TEST:
     console.log(form_summary);
+    console.log(googlekey);
+    
     let form_action = "https://docs.google.com/forms/d/" + googleFormAddrDebug;
     try {
         var xhr = new XMLHttpRequest();
