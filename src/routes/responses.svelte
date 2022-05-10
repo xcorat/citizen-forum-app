@@ -43,8 +43,6 @@
         }
     }
 
-    console.log($dictionary)
-
 
 </script>
 
@@ -57,7 +55,9 @@
             </span>
         </label>
         <div>
-        <TranslatableSelect item_settings={selectable_topics_list} bind:value={topic}
+        <TranslatableSelect
+            id="topic-select"
+            item_settings={selectable_topics_list} bind:value={topic}
             on:select={updatePosts}/>
         </div>
     </div>

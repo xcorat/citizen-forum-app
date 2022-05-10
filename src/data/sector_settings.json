@@ -1,0 +1,23 @@
+{
+    "urban": {
+        "label": {
+            "en_GB": "Urban",
+            "ta_LK": "நகர்ப்புற",
+            "si_LK": "නාගරික"
+        }
+    },
+    "rural": {
+        "label": {
+            "en_GB": "Rural",
+            "ta_LK": "கிராமப்புற",
+            "si_LK": "ග්‍රාමීය"
+        }
+    },
+    "plantation": {
+        "label": {
+            "en_GB": "Plantation",
+            "ta_LK": "தோட்டத் தொழில்",
+            "si_LK": "වැවිලි අංශ"
+        }
+    }
+}

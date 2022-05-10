@@ -7,6 +7,9 @@
     import { dictionary, _ , locale} from 'svelte-i18n';
 
     import topics_settings from '../data/topics_settings.json';
+    import admin_div_settings from '../data/admin_div_settings.json';
+    import sector_settings from '../data/sector_settings.json';
+
     import TranslatableSelect from '../components/translatableSelect.svelte';
 
     import  submitGoogleForm from '../lib/submit_google_form';
@@ -22,18 +25,28 @@
             "digIDProvider": "ඩිජිටල් අනන්‍යතාව",
             "digID": "ඩිජිටල් අනන්‍යතා සබැඳිය (ඊමේල් ලිපිනය, දුරකථන අංකය හෝ සමාජ මාධ්‍ය සබැඳිය)",
             "topic": "විෂයපථය",
+            "sector": "sector-si",
+            "admin-division": "admin-division-si",
             "title": "කෙටි මාතෘකාව",
             "post": "ඔබේ යෝජනා",
             // "submit": "",
+            "topic_placeholder": "select-topic-si", 
+            "sector_placeholder": "selecte-sector-si",
+            "admin-div-placeholder": "select-admin-div-si"
         };
         dict.ta_LK[page_id] = {
             "name": "உங்கள் பெயர்",
             "digIDProvider": "டிஜிட்டல் அடையாளம்",
             "digID": "டிஜிட்டல் அடையாளம் (email, தொலைபேசி எண் அல்லது சமூக ஊடகம் link)",
             "topic": "பொருள் பகுதி",
+            "sector": "sector-tm",
+            "admin-division": "admin-division-tm",
            // "title": "කෙටි මාතෘකාව",
             "post": "உங்கள் பரிந்துரைகள்",
             // "submit": ""
+            "topic_placeholder": "select-topic-tm", 
+            "sector_placeholder": "selecte-sector-tm",
+            "admin_div_placeholder": "select-admin-div-tm"
         };
 
         // TODO: move this to a library or something? 
@@ -45,6 +58,25 @@
             dict.si_LK['topics'][key] = value.label.si_LK;
             dict.ta_LK['topics'][key] = value.label.ta_LK;
         }   
+
+        dict.en_GB['admin_divs'] = {};
+        dict.si_LK['admin_divs'] = {};
+        dict.ta_LK['admin_divs'] = {};
+        for (const [key, value] of Object.entries(admin_div_settings)) {
+            dict.en_GB['admin_divs'][key] = value.label.en_GB;
+            dict.si_LK['admin_divs'][key] = value.label.si_LK;
+            dict.ta_LK['admin_divs'][key] = value.label.ta_LK;
+        }   
+
+        dict.en_GB['sectors'] = {};
+        dict.si_LK['sectors'] = {};
+        dict.ta_LK['sectors'] = {};
+        for (const [key, value] of Object.entries(sector_settings)) {
+            dict.en_GB['sectors'][key] = value.label.en_GB;
+            dict.si_LK['sectors'][key] = value.label.si_LK;
+            dict.ta_LK['sectors'][key] = value.label.ta_LK;
+        }
+
         return dict;
     })
   
@@ -54,11 +86,16 @@
     const digID = field('digID', '', [required()]);
     //const email = field('email', '', [required(), email_validator()]);
     const topic = field('topic', '', [required()]);
-    const title = field('title', '', [required()]);
+
+    let admin_div_selected = false;
+    const admin_div = field('admin_div', '', []);
+    let sector_selected = false;
+    const sector = field('sector', '', []);
+    const title = field('title', '', []);
     const post = field('post', '', [required()]);
     
     // Create form
-    const npForm = form(name, digIDProvider, digID, topic, title, post);
+    const npForm = form(name, digIDProvider, digID, topic, admin_div, sector, title, post);
     
     const digIDPs = ["Email Address", "Phone Number", "Facebook Link", "Twitter Link"];
     //submitGoogleForm({});
@@ -74,14 +111,19 @@
         let topic = topics_settings[topic_val].label.en_GB + " "
                     + topics_settings[topic_val].label.si_LK + " "
                     + topics_settings[topic_val].label.ta_LK;
+        let admin_div = (admin_div_selected)? vals.admin_div.value: null;
+        let sector = (sector_selected)? vals.sector.value: null;
 
         let data = {
             name: vals.name, 
             digIDProvider: vals.digIDProvider.label,
             digID: vals.digID,
-            topic: topic,
+            topic,
+            admin_div,
+            sector,
             title: vals.title,
             post: vals.post,
+            lang: get(locale),
         }
 
         // Add data to the google form
@@ -161,11 +203,49 @@
             </span>
             <span class="alert-small" class:text-error={$npForm.hasError('topic.required')}>required</span>
         </label>
-        <TranslatableSelect item_settings={topics_settings} bind:value={$topic.value}/>
+        <TranslatableSelect id="npform-topic"
+            placeholder={$_(page_id+'.topic_placeholder', { default: 'Select Topic' })}
+            item_settings={topics_settings} bind:value={$topic.value}/>
         <!-- {#if $npForm.hasError('topic.required')}
             <div class="validate-error">Topic is required</div>
         {/if} -->
     </div>
+
+    <div class="flex w-full">
+        <div class="grid flex-grow">
+            <div tabindex="0" class="collapse collapse-plus	">
+                <input type="checkbox" bind:checked={admin_div_selected} /> 
+                <label class="collapse-title" for="npform-admin_div">
+                    <span class="label-text">
+                        Select Province
+                    </span>
+                </label>
+                <div class="collapse-content"> 
+                    <TranslatableSelect id="npform-admin-div"
+                    placeholder={$_(page_id+'.admin_div_placeholder', { default: 'Select Provice' })}
+                    item_settings={admin_div_settings} bind:value={$admin_div.value}/>
+                </div>
+            </div>    
+        </div>
+        <div class="divider divider-horizontal"></div>
+        <div class="grid flex-grow">       
+            <div tabindex="0" class="collapse collapse-plus	">
+            <input type="checkbox"  bind:checked={sector_selected}/> 
+            <label class="collapse-title" for="npform-sector">
+                <span class="label-text">
+                    Select Sector
+                </span>
+            </label>
+            <div class="collapse-content"> 
+                <TranslatableSelect id="npform-sector"
+                 placeholder={$_(page_id+'.sector_placeholder', { default: 'Select Sector' })}
+                item_settings={sector_settings} bind:value={$sector.value}/>
+            </div>
+        </div>
+    </div>
+    </div>
+
+
 
     <div class="form-control">
         <label class="label" for="npform-title">

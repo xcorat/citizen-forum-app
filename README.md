@@ -2,6 +2,8 @@
 
 Web app for the citizen forum, sparked by the GotaGoHome2022 protests
 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/625ef0e2-ab9c-48c0-8518-f3897aea642f/deploy-status)](https://app.netlify.com/sites/citizen-forum-app/deploys)
+
 ## How to test
 
 ```bash
