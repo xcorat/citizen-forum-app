@@ -15,7 +15,7 @@
     import  submitGoogleForm from '../lib/submit_form';
     
     // TODO: read this from the path?
-    const page_id = 'form'
+    const page_id = 'form';
 
     // The dictionary with translations strings for this page.
     dictionary.update( (dict) => {
@@ -123,16 +123,17 @@
             sector,
             title: vals.title,
             post: vals.post,
-            lang: get(locale),
+            lang: get(locale)
         }
 
         // Add data to the google form
         submitGoogleForm(data);
 
-        responses.insert(data)
+        responses.insert(data);
         npForm.reset();
-        $npForm.dirty = false;
-        console.log(get(npForm).summary);
+        // // TODO: throws error
+        //$npForm.dirty = false;
+        console.log(vals);
     }
   </script>
   

@@ -1,7 +1,7 @@
 <script lang="ts">
     import { dictionary, locale, _ } from 'svelte-i18n'; 
     import { dev } from '$app/env';
-    const googleFormAddrDebug = "1FAIpQLSe3IcJXD8T5ey5fMdv9Krceve9C3Ti1oNiQOIjvrRE5bl6aGw" //import.meta.env.VITE_GOOGLE_FORM_ADDR_DEBUG as string;
+    const googleFormAddrDebug = "1wdiZObfkHM33v4a7cA2DWZRtKhWNfrh3rwPOWXYDlTU" //import.meta.env.VITE_GOOGLE_FORM_ADDR_DEBUG as string;
 
     const gform_dev_url = "https://docs.google.com/forms/d/e/" + googleFormAddrDebug + "/viewform"
     const gform_url = (dev)? gform_dev_url: "https://rb.gy/hj6ogz";

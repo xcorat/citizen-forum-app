@@ -1,30 +1,45 @@
 import { Handler } from '@netlify/functions'
-const googleFormAddrDebug = "1FAIpQLSe3IcJXD8T5ey5fMdv9Krceve9C3Ti1oNiQOIjvrRE5bl6aGw" 
+/* eslint-disable */
+import fetch from 'node-fetch'
+import { form } from 'svelte-forms';
 
-function submitGoogleForm(form_summary) {
+const googleFormAddrDebug = "1wdiZObfkHM33v4a7cA2DWZRtKhWNfrh3rwPOWXYDlTU"//import.meta.env.VITE_GOOGLE_FORM_ADDR_DEBUG as string;
+
+async function submitGoogleForm(form_summary) {
   // TODO: TEST:
   console.log(form_summary);
-  
-  let form_action = "https://docs.google.com/forms/d/" + googleFormAddrDebug;
+  const url = "https://docs.google.com/forms/d/" + googleFormAddrDebug + '/formResponse';
+  let full_post = format_post_text(form_summary);
+  let formdata =    "entry.1857901265=" + encodeURIComponent(form_summary.name)
+              + "&entry.1590668805=" + encodeURIComponent(form_summary.digIDProvider)
+              + "&entry.117508226=" + encodeURIComponent(form_summary.digID)
+              + "&entry.474571559=" + encodeURIComponent(form_summary.topic)
+              + "&entry.239756388=" + encodeURIComponent(full_post);
+
+  console.log(formdata);
   try {
-      var xhr = new XMLHttpRequest();
-
-      let full_post = format_post_text(form_summary);
-
-      let data =    "entry.1857901265=" + encodeURIComponent(form_summary.name)
-                  + "&entry.1590668805=" + encodeURIComponent(form_summary.digIDProvider)
-                  + "&entry.117508226=" + encodeURIComponent(form_summary.digID)
-                  + "&entry.474571559=" + encodeURIComponent(form_summary.topic)
-                  + "&entry.239756388=" + encodeURIComponent(full_post);
-
-     console.log(data)
-      xhr.open('POST', form_action + '/formResponse', true);
-      xhr.setRequestHeader('Accept',
-          'application/xml, text/xml, */*; q=0.01');
-      xhr.setRequestHeader('Content-type',
-          'application/x-www-form-urlencoded; charset=UTF-8');
-      xhr.send(data);
-  } catch(e) {}
+    const res = await fetch( url, {
+      method: 'POST',
+      headers: {
+        'Content-type': 'application/x-www-form-urlencoded; charset=UTF-8',
+        'Accept' : 'application/xml, text/xml, */*; q=0.01'
+      },
+      body: formdata
+    })
+    console.log(res)
+    const { status, statusText, headers, body } = res;
+    return {
+      statusCode: status,
+      body: JSON.stringify({ status, statusText, headers, body })
+    }
+  } catch(error) {
+    console.log(error);
+    const { status, statusText, headers, data } = error;
+    return {
+      statusCode: status,
+      body: JSON.stringify({ status, statusText, headers, data })
+    }
+  }
 
   return false;
 }
@@ -41,11 +56,12 @@ function format_post_text(form_summary) {
   return full_post;
 }
 
-export const handler: Handler = async (form_summary, context) => {
+export const handler: Handler = async (event, context) => {
   //const { name = 'stranger' } = event.queryStringParameters
+  const form_summary = JSON.parse(event.body);
   try {
 
-    submitGoogleForm(form_summary)
+    await submitGoogleForm(form_summary)
     return {
       statusCode: 200,
       body: JSON.stringify({
