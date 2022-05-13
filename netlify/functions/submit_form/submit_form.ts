@@ -10,7 +10,7 @@ async function submitGoogleForm(form_summary) {
   console.log(form_summary);
   const url = "https://docs.google.com/forms/d/" + googleFormAddrDebug + '/formResponse';
   let full_post = format_post_text(form_summary);
-  let formdata =    "entry.1857901265=" + encodeURIComponent(form_summary.name)
+  let formdata = "entry.1857901265=" + encodeURIComponent(form_summary.name)
               + "&entry.1590668805=" + encodeURIComponent(form_summary.digIDProvider)
               + "&entry.117508226=" + encodeURIComponent(form_summary.digID)
               + "&entry.474571559=" + encodeURIComponent(form_summary.topic)
@@ -58,9 +58,9 @@ function format_post_text(form_summary) {
 
 export const handler: Handler = async (event, context) => {
   //const { name = 'stranger' } = event.queryStringParameters
-  const form_summary = JSON.parse(event.body);
   try {
-
+    const form_summary = JSON.parse(event.body);
+    
     await submitGoogleForm(form_summary)
     return {
       statusCode: 200,
