@@ -9,7 +9,7 @@ async function submitGoogleForm(form_summary) {
     //      The errpr asks to use a file called `_redirects`, but not sure
     //      where to put it.
     // const url = "/api/submit_form"
-    const url = "/.netfly/functions/submit_form"
+    const url = "/.netlify/functions/submit_form"
     console.log(form_summary)
     async function post_form (form_summary) {
 		const res = await fetch(url, {
