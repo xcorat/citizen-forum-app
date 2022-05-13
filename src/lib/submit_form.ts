@@ -5,10 +5,11 @@ const googleFormAddrDebug = import.meta.env.VITE_GOOGLE_FORM_ADDR_DEBUG as strin
 const googlekey = import.meta.env.VITE_GAPI_KEY as string  
 
 async function submitGoogleForm(form_summary) {
-    //submitGoogleFormold(form_summary)
-    //return;
-
-    const url = "/api/submit_form"
+    // TODO: check how to get the redirects working.
+    //      The errpr asks to use a file called `_redirects`, but not sure
+    //      where to put it.
+    // const url = "/api/submit_form"
+    const url = "/.netfly/functions/submit_form"
     console.log(form_summary)
     async function post_form (form_summary) {
 		const res = await fetch(url, {
