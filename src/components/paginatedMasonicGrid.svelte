@@ -1,11 +1,13 @@
 <script lang="ts">
+import type { PostDisplay } from '$lib/post_schema';
+
     import { onMount } from 'svelte';
     import { dictionary, _ } from 'svelte-i18n';
 
     import topics_settings from '../data/topics_settings.json';
 
     export let numDisplayed = 25;
-    export let posts = [];
+    export let posts: PostDisplay[] = [];
 
     // TODO: fucking terrible way to detect component mount but dont care, fix later
     let mountDone = false;
@@ -51,7 +53,7 @@
     }
 
     let displayIndices = {start: 0, end: numDisplayed};
-    let displayed = [];
+    let displayed: PostDisplay[] = [];
 
     // TODO: this is on a seperate function call so we can call the redrawing of
     //  posts whwnever the posts change
@@ -93,12 +95,12 @@
     <div class="item blog">
         <div class="card bg-base-100 shadow-xl content" class:trunc={item.truncated}>
             <div class="card-body"> 
-                <h2 class="card-title">{$_('topics.'+item.topicID)}</h2>
+                <h2 class="card-title">{$_('topics.'+item.post.topic)}</h2>
                 <p>{@html item.exerpt.replace(/\n/g, '<br>')}</p>
-                <div class="card-author">by {item.author}</div>
+                <div class="card-author">by {item.post.author.name}</div>
                 {#if item.truncated}
                     <div class="card-actions justify-center">
-                        <a href="/post/{item.index}" class="btn btn-primary">
+                        <a href="/post/{item.post.uuid}" class="btn btn-primary">
                             {$_('read_more', { default: 'Read More' })}
                         </a>
                     </div>
