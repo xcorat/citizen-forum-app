@@ -82,23 +82,20 @@
                 }
             },
             {
-                "enum_idx" : "4",
-                "title": "Crisis management.",
-                "text": "The government must take urgent measures to manage the current crisis and all processes shall be transparent. : The prevailing social, economic and political crises have transformed into humanitarian crises. Therefore, short, medium and long term solutions are required to resolve the prevailing crises at hand.", 
-                "subs": {
-                    "a": "",
-                    "b": "",
-                    "c": ""
-                }
+                "enum_idx" : "7",
+                "title": "Include the right to life as a fundamental right of all citizens in the Constitution of Sri Lanka. (Follow the Indian and South African constitutions and it’s clauses on the Right to Life as inspiration)",
+                "text": "", 
+                "subs": {}
             },
             {
-                "enum_idx" : "4",
-                "title": "Crisis management.",
-                "text": "The government must take urgent measures to manage the current crisis and all processes shall be transparent. : The prevailing social, economic and political crises have transformed into humanitarian crises. Therefore, short, medium and long term solutions are required to resolve the prevailing crises at hand.", 
+                "enum_idx" : "8",
+                "title": "Laws must be amended as necessary to allow free and fair elections after the dissolution of the interim government.",
+                "text": "", 
                 "subs": {
-                    "a": "",
-                    "b": "",
-                    "c": ""
+                    "a": "Bring about special legal reforms to vest more powers on the independent elections commission so as to monitor all media to ensure that they operate in an independent, free and fair manner",
+                    "b": "Establish a special committee to investigate and monitor all media stations to ensure that they publish all statistics and public sentiment polls in a free and fair manner and to regulate unjust programmes so as to execute a free and fair election",
+                    "c": "Bring about legal reforms to regulate Election Campaign Financing by drawing examples from countries that have done the same",
+                    "d": "Amend election laws to improve participation of women and youth in politics"
                 }
             }
         ]
