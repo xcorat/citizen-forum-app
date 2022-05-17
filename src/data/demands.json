@@ -1,0 +1,156 @@
+{
+    "en_GB" : {
+        "title": "Beyond the Gallface - Public Demand list",
+        "intro": {
+            "title": "intro",
+            "text" : "<p>Dearest fellow protestors/ citizens, </p><p>We are at a watershed moment in our history. At this moment, we have stepped out onto our streets as one, with one dream enshrined in our hearts; that of a People’s Republic that will secure the future of our current and unborn generations. </p><p>Ours is a movement that stands firmly upon a foundation of love, peace and courage. The main aim of our protest is to end the corrupt Rajapaksa regime headed by Nandasena Gotabhaya Rajapaksa and to create a collective agreement that will usher in a new era of governance. </p><p>To this end, we as Sri Lankans stand united in heart and soul, regardless of religion, ethnicity, caste, or creed. </p><p>The people’s protests began in March as a response to the repression the public had faced for many years. Starting with a series of public protests, the epicentre of the movement, GotaGoGama at Galle Face Green, stands as a silent ode to our hope for a better tomorrow. It is a symbol of a courageous effort to give birth to a new culture of citizenship devoid of the corruption that has plagued Sri Lankan politics for over 7 decades, and free from the regressive political rhetoric of the Rajapaksas that has rooted itself in the collective psyche of our people. </p><p>The Rajapaksa regime (with Gotabhaya at its helm) has managed to amplify the effects of the flaws inherent in a weak system that is founded upon 7 decades of corruption, mismanagement and violence. The rash, corrupt and arrogant decisions made by Gotabaya and his clan have reduced our Sri Lanka to a bankrupt, broken wasteland where chaos reigns and even the most essential of services can no longer be provided. The economic and social crisis created by the Rajapaksas has now moved beyond a political crisis to a humanitarian crisis. Therefore, we unanimously agree that the first step in solving this situation is the removal of Gotabhaya Rajapaksa and his regime. </p><p>However, the slogan “Gota Go Home” should not be interpreted to be confined to the removal of Gotabaya Rajapaksa alone. Rather, “Gota Go Home” is merely shorthand for a set of implicit and explicit demands/agreements which we now set out to express through this document. </p><p>These solutions are by no means exhaustive and are merely representative of the minimum that can be agreed upon by several stakeholders of our movement. If you find that these points are satisfactory, we invite you to sign this document, indicating your name and the organization you represent (if any). We wish to emphasize that the signing of this demand list does not and will not limit you from presenting solutions or advocating for specific issues that go beyond the scope of this document. </p><p>Considering that the only productive way to release the death grip of the Rajapaksa regime upon our democracy is to form a broad alliance of citizens, we invite you to consider supporting this petition as a first step towards establishing a common consensus among all stakeholders of the movement. </p>"
+        },
+        "demands_list_title": "Demands of Sri Lankan citizens",
+        "demands_list": [
+            {
+                "enum_idx" : "1",
+                "title": "The Rajapaksa regime headed by President Gotabhaya Rajapaksa must relinquish power immediately.",
+                "text": "",
+                "subs": {
+                    "a": "immense responsibility for the current crisis is borne by the President’s short-sighted, callous decision making. To prevent the current crisis in the country from deepening, the current president Gotabaya Nandasena Rajapakse should agree to resign from his position with immediate effect.",
+                    "b": "The succeeding President and Prime Minister should a) not be a supporter of the Rajapakse regime and b)  bebe a person not legally accused of fraud, corruption or any other crime.",
+                    "c": "All political appointees recruited or promoted by the Rajapakse regime to executive positions of state authorities, departments, enterprises and ministries (i.e.: chairman and/or directors) should resign with immediate effect."
+                }
+            },
+            {
+                "enum_idx": "2",
+                "title": "An interim government must be established for a predetermined period",
+                "text": "",
+                "subs": {
+                    "a": "The parliament should immediately set up an interim government for a limited period of time, with the goal of restoring social, political and economic stability in the country.  Appointing the Prime Minister and the Cabinet of Ministers of this interim government should be done through a party leaders’ conference.",
+                    "b": "The new cabinet members of the interim government should not include any members of the Rajapaksha family regime AND should not be persons legally accused of fraud, corruption or any other crime. ",
+                    "c": " The number of Ministers should be limited to a maximum of 15. Reactivating the already established but inactive Parliamentary Sectoral Oversight Committees in keeping with the number and thematic areas of the newly formed ministries should be done and the Committees should be endowed with the necessary powers to correct the courses of action of the line ministries, thus assuring the active involvement of all parliamentarians in the governance of the country.",
+                    "d": "All benefits afforded to Cabinet and non-Cabinet Ministers, as well as Members of Parliament, should be re-evaluated with the intention of reducing unnecessary wastage of resources",
+                    "e": "At the point of dissolution of the interim government, free and fair general elections should be conducted to ensure that a new government is established with a clear mandate from the people of Sri Lanka."
+                }
+            },
+            {
+                "enum_idx": "3",
+                "title": "Enacting Essential amendments to the Constitution immediately",
+                "text": "",
+                "subs": {
+                    "a": "The first task of the new interim government should be to repeal the 20th Amendment and to bring back an improved version of the 19th amendment (19+) through the enactment of a 21st Amendment to the Constitution so as to limit the powers conferred on the Executive Presidency. This must be implemented within a period of two (02) months.",
+                    "b": "Following the above, necessary arrangements should be made to abolish the executive presidency, within a reasonable, specific period of time (not exceeding 06 months) through constitutional reforms.",
+                    "c": "The process of constitutional reform should lead to the drafting and implementation of necessary legal reforms that safeguard the right of all communities (specifically encompassing citizens of the North and East, those citizens discriminated on the basis of race, religion, caste, sexuality, geography, occupation, class and culture) to live in a just and equitable society. A nationwide program should be initiated alongside these legal reforms to engineer positive social change in this regard.",
+                    "d": "Programmes focused on national reconciliation need to be executed in an effective manner to ensure accountability and to create a societal foundation of true long-term peace and justice.",
+                    "e": "Space must be created for a political culture focused on participatory democracy. A strong and effective link must be created between the legislature and the citizenry, through the creation of citizen forums that include individuals and communities represented at the people’s protest and the wider civil society."
+                }
+            },
+            {
+                "enum_idx" : "4",
+                "title": "Crisis management.",
+                "text": "The government must take urgent measures to manage the current crisis and all processes shall be transparent. : The prevailing social, economic and political crises have transformed into humanitarian crises. Therefore, short, medium and long term solutions are required to resolve the prevailing crises at hand.", 
+                "subs": {
+                    "a": "Propose a budget to provide relief to the people to overcome the emergency situation (including but not limited to the food and drug shortage) that people are currently facing.",
+                    "b": "Activate a social empowerment programme based on the above-proposed budget",
+                    "c": "Establish an economic reform process with expert advice to bring about economic stability",
+                    "d": "Create a Social security Net to provide security to groups that would be highly vulnerable and at-risk during the execution of economic reform programmes",
+                    "e": "Establish a mechanism to regulate the black market economy and impose price controls and ensure the quality of goods and services",
+                    "f": "Audit all existing development projects, review all unnecessary/less priority projects and draft a priority list with regards to the execution of future development projects",
+                    "g": "Include all civil society groups, trade unions, subject matter experts and stakeholders from various sectors when formulating upcoming economic reforms",
+                    "h": "During the process of restructuring our foreign debt, focus on innovative concepts such as Climate Debt and attract relevant diplomatic interventions to secure all available relief to Sri Lanka"
+                }
+            },
+            {
+                "enum_idx" : "5",
+                "title": "Assets Investigation and disclosure",
+                "text": "", 
+                "subs": {
+                    "a": "Conduct a surveillance audit on close associates of the Rajapaksa regime and all public representatives ",
+                    "b": "Confiscate all illegal assets exposed from the above-mentioned audit and carry out legal action against perpetrators",
+                    "c": "Implement a mechanism to reclaim illegally acquired assets deposited overseas by inviting diplomatic interventions along with necessary legal and technical expertise ",
+                    "d": "Enact the 2003 United Nations Convention Against Corruption and introduce its legal provisions to Sri Lanka’s legal framework"
+                }
+            },
+            {
+                "enum_idx" : "6",
+                "title": "Re-establishment of the Rule of law",
+                "text": "",
+                "subs": {
+                    "a": "Establish a mechanism to ensure transparency and accountability of the Auditor General for example by establishing a Parliamentary Review Committee that includes submission and participation of civil society groups and concerned communities",
+                    "b": "Bring about law reforms to revoke draconian laws that would hinder people’s rights to freedom of speech and expression (for example, revoke provisions that would hinder fundamental rights of the people in laws such as the PTA and proposed CTA)",
+                    "c": "Expedite legal proceedings with regards to ongoing court cases on victims of politically sponsored murders, abductions and disappearances (including the Easter Sunday Attacks, Rambukkana killing and recent attacks on peaceful protestors in “Gota Go Gama”, “Mainah Go Gama” and Mahalwarawa) carried out under the auspices of the regime, without any political interferences and punish perpetrators accordingly. More importantly, court proceedings involving the Rajapaksha regime that were hindered due to political interference or technical errors should be resumed. ",
+                    "d": "Establish a ‘Commision to ensure Justice to Victims of Crimes’ to probe into the truth behind violence, rape, abuse, disappearances, looting of public property, extrajudicial killings and punish perpetrators based on findings of investigations",
+                    "e": "Ensure justice to victims who were harassed and impacted by imprisonments carried out through political interference and the abuse of the law",
+                    "f": "Bring all prisons under the purview of the Human Rights Commission and enlist factual details of all prisoners while releasing all political prisoners",
+                    "g": "Investigate and punish those who were involved in environmental destruction, bio-theft and bio-piracy activities"
+                }
+            },
+            {
+                "enum_idx" : "4",
+                "title": "Crisis management.",
+                "text": "The government must take urgent measures to manage the current crisis and all processes shall be transparent. : The prevailing social, economic and political crises have transformed into humanitarian crises. Therefore, short, medium and long term solutions are required to resolve the prevailing crises at hand.", 
+                "subs": {
+                    "a": "",
+                    "b": "",
+                    "c": ""
+                }
+            },
+            {
+                "enum_idx" : "4",
+                "title": "Crisis management.",
+                "text": "The government must take urgent measures to manage the current crisis and all processes shall be transparent. : The prevailing social, economic and political crises have transformed into humanitarian crises. Therefore, short, medium and long term solutions are required to resolve the prevailing crises at hand.", 
+                "subs": {
+                    "a": "",
+                    "b": "",
+                    "c": ""
+                }
+            }
+        ]
+    },
+    "si_LK" : {
+        "title": "ගාලු මු඼දදොය පුය඼ැසි අයගරදේ ඳාර්ල්඼කරු඼න් විසින් ඉදිරිඳත් කයනු රඵන \"ගාලුමු඼දදොරින් ඔබ්ඵට\" පුය඼ැසි ඉල්ලීම් දඹෝජනා඼ලිඹ",
+        "intro": {
+            "title": "intro",
+            "text" : "intro text"
+        },
+        "demands_list": [
+            {
+                "enum_idx" : "1",
+                "title": "sinhala d by President Gotabhaya Rajapaksa must relinquish power immediately.",
+                "text": {
+                    "a": "sdfsdf",
+                    "b": "saddas"
+                }
+            },
+            {
+                "enum_idx": "2",
+                "title": "An interim government must be established for a predetermined period",
+                "text": {
+                    "a": "sdfsdf",
+                    "b": "saddas"
+                }
+            }
+        ]
+    },
+    "ta_LK" : {
+        "title": "“fhypKfj ;jplYf;F mg;ghy;” gpui[fspd; Nfhupf;if Kd;nkhopTfs; ",
+        "intro": {
+            "title": "intro",
+            "text" : "intro text"
+        },
+        "demands_list": [
+            {
+                "enum_idx" : "1",
+                "title": "The Rajapaksa regime headed by President Gotabhaya Rajapaksa must relinquish power immediately.",
+                "text": {
+                    "a": "sdfsdf",
+                    "b": "saddas"
+                }
+            },
+            {
+                "enum_idx": "2",
+                "title": "An interim government must be established for a predetermined period",
+                "text": {
+                    "a": "sdfsdf",
+                    "b": "saddas"
+                }
+            }
+        ]
+    }
+}
