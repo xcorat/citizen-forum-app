@@ -16,10 +16,20 @@ const defaultResponse = {
     truncated: false,
 }
 
-function createResponseArray(){
+async function getAllResponses(){
+    const url = "/.netfly/functions/get_posts";
+    const res = await fetch(url);
+    const data = await res.json();
+
+    return data as [];
+}
+
+async function createResponseArray(){
     //const resArray = responsesJSON.map((res, index) => formatResponse(res, index) )
-    const resArray = responsesJSON.map((res, index) => {
-        const post = Post.from_gform_post(res, index);
+    const postsJSON = await getAllResponses();
+    const resArray = postsJSON.map((res, index) => {
+        // index starts from 1
+        const post = Post.from_gform_post(res, 0);
         return new PostDisplay(post);
     })
 
@@ -41,6 +51,8 @@ function createResponsesStore() {
         })
 
     };
+
+    function get_post()
 
     return { subscribe, insert };
 };
