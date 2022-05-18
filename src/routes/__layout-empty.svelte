@@ -4,6 +4,8 @@
     import { getAuth, onAuthStateChanged, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 
     import { onMount } from 'svelte';
+
+	import '../lib/i18n';
     import { locale, _ } from 'svelte-i18n';
 
     const locales = [{name: 'en_GB', label: 'EN'},
