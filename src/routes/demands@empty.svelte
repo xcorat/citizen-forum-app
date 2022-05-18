@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
     import demandsJSON from '../data/demands.json'
     import DemandCollapse from '../components/demandCollapse.svelte';
     import { dictionary, _, locale } from "svelte-i18n";
@@ -29,7 +29,42 @@
         if( val ){
             demands_dict = demandsJSON[val];
         }
-    })
+    });
+
+    let userComment;
+    let user = { name: "", email: "" };
+
+    async function submitSuggestion(){
+        await submitComment(true);
+    }
+    async function submitQuestion(){
+        await submitComment(true);
+    }
+
+    async function submitComment(suggestion: boolean) {
+        console.log(userComment)
+        // TODO: check how to get the redirects working.
+        //      The errpr asks to use a file called `_redirects`, but not sure
+        //      where to put it.
+        // const url = "/api/submit_demand_comment"
+        const url = "/.netfly/functions/submit_demand_comment"
+        async function post_comment(suggestion: boolean) {
+            const commentEntry = {
+                type: (suggestion)? "Suggestion": "Question",
+                user,
+                comment: userComment,
+            }
+            const res = await fetch(url, {
+                method: 'POST',
+                body: JSON.stringify(commentEntry)
+            })
+            
+            const json = await res.json()
+            console.log(JSON.stringify(json))
+        }
+        await post_comment(suggestion);
+    }
+
 </script>
 
 
@@ -45,15 +80,17 @@
 </div>
 <div>
     <h1>Add Suggestion/Question</h1>
-    <div>
-        <textarea class="w-full textarea" placeholder="Add Suggestion/Question"></textarea>
-    </div>
-    <div>
-        <a role="button" class="btn btn-primary" href="">
-            {$_(page_id+'.suggestions', { default: "Submit a Suggestion"})}
-        </a>
-        <a role="button" class="btn" href="/form">
-            {$_(page_id+'.questions', { default: "Ask a Question"})}
-        </a>
-    </div>
+    <form class="mt-5" on:submit|preventDefault={submitComment}>
+        <div>
+            <textarea class="w-full textarea" placeholder="Add Suggestion/Question" bind:value="{userComment}"></textarea>
+        </div>
+        <div>
+            <a role="button" class="btn btn-primary" on:click="{submitSuggestion}">
+                {$_(page_id+'.suggestions', { default: "Submit a Suggestion"})}
+            </a>
+            <a role="button" class="btn"  on:click="{submitQuestion}">
+                {$_(page_id+'.questions', { default: "Ask a Question"})}
+            </a>
+        </div>
+    </form>
 </div>

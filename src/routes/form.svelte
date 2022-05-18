@@ -111,7 +111,7 @@
             <span class="alert-small" class:text-error={$npForm.hasError('name.required')}>
                 required</span>
         </label>
-        <input type="t  ext" placeholder="Your Name" class="input input-bordered"
+        <input type="text" placeholder="Your Name" class="input input-bordered"
             bind:value={$name.value} id="npform-name">
         <!-- {#if $npForm.hasError('name.required')}
             <div class="validate-error">Name is required</div>
