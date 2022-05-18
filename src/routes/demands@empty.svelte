@@ -3,19 +3,19 @@
     import DemandCollapse from '../components/demandCollapse.svelte';
     import SubmitCommentForm from '../components/submitCommentForm.svelte';
     import { dictionary, _, locale } from "svelte-i18n";
+    import DemandsCitizenSubmitted from '../components/demandsCitizenSubmitted.svelte';
 
     const page_id = 'demands';
 
     let demands_dict = demandsJSON['en_GB']
 
+    // TODO: checking if the locale is undef might not be necessary if the 
+    //      default is set properly
     locale.subscribe((val) => {
         if( val ){
             demands_dict = demandsJSON[val];
         }
     });
-
-
-
 
 </script>
 
@@ -31,3 +31,4 @@
     {/each}
 </div>
 <SubmitCommentForm/>
+<DemandsCitizenSubmitted/>

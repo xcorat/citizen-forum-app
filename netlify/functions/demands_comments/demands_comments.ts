@@ -7,16 +7,18 @@ const mongo_api_key = process.env.MONGO_ATLAS_API_KEY;
 const mongo_uri_endpoint = process.env.MONGO_ATLAS_URI_ENDPOINT;
 
 export const handler: Handler = async (event, context) => {
-  //const { name = 'stranger' } = event.queryStringParameters
-  const doc = JSON.parse(event.body);
+  const type = event.queryStringParameters.type || 'Suggestion';
+  const num_comments = event.queryStringParameters.n || 25;
+
+  // TODO: Add limit to the query
   const comment_obj = {
       "dataSource": "citizen-forum-demands",
       "database": "cf-dev",
       "collection": "demands_comments",
-      "document": doc
+      "filter": { "type": type }
   }
   
-  const url = mongo_uri_endpoint + '/action/insertOne';
+  const url = mongo_uri_endpoint + '/action/find';
   const post_config = {
     method: 'POST',
     headers: {
@@ -26,21 +28,19 @@ export const handler: Handler = async (event, context) => {
     },
     body: JSON.stringify(comment_obj)
   }
+
+
   try {
     async function post_comment (post_config) {
       const res = await fetch(url, post_config)
-      
       const json = await res.json()
-      console.log(JSON.stringify(json))
+      return json;
     }
-    console.log(url, post_config)
-    await post_comment(post_config);
-
+    const posts = await post_comment(post_config);
+    
     return {
       statusCode: 200,
-      body: JSON.stringify({
-        message: 'submitted',
-      }),
+      body: JSON.stringify(posts),
     }
   }
   catch(e) {

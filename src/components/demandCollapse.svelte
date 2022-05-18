@@ -1,5 +1,5 @@
 <script lang='ts'>
-    export let index;
+    export let index: number = 0;
     export let text;
     export let title;
     export let subs;
@@ -10,7 +10,7 @@
 
 <div tabindex="0" class="collapse collapse-arrow border border-base-300 bg-base-100 rounded-box">
     <div class="collapse-title text-xl font-medium">
-      {index}. { title }
+      {#if index > 0} {index}. {/if}{ title }
     </div>
     <div class="collapse-content"> 
         {#if text}

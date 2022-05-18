@@ -4,7 +4,6 @@
     const page_id = 'demand_comment_form';
 
     dictionary.update( (dict) => {
-        console.log(dict)
         dict['si_LK'][page_id] = {
             "suggestions": "suggestions-si",
             "questions": "questions-si"
