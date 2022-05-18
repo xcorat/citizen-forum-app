@@ -1,3 +1,19 @@
 [build]
   command = "npm run build"
   publish = "build"
+ 
+[dev]
+  command = "svelte-kit dev"
+  # Why do we need this? not present in the docs, `_app` is the default 
+  #   dev dir from `svelte.config.js`
+  publish = "build/_app"
+  targetPort = 3000
+ 
+[functions]
+  directory = "netlify/functions"
+  node_bundler = "esbuild"
+
+# [[redirects]]
+  # from = "/api/*"
+  # to = "/.netlify/functions/:splat"
+  # status = 200

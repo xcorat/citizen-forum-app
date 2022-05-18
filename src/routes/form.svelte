@@ -9,7 +9,7 @@
     import topics_settings from '../data/topics_settings.json';
     import TranslatableSelect from '../components/translatableSelect.svelte';
 
-    import  submitGoogleForm from '../lib/submit_google_form';
+    // import  submitGoogleForm from '../lib/submit_google_form';
     
     // TODO: read this from the path?
     const page_id = 'form'

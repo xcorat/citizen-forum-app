@@ -10,7 +10,7 @@
             "questions": "questions-si"
         };
         dict['ta_LK'][page_id] = {
-            "suggestions": "suggestions-ta",
+            "suggestions": "sugge   stions-ta",
             "questions": "questions-ta"
         }
 
@@ -28,12 +28,12 @@
     }
 
     async function submitComment(suggestion: boolean) {
-        console.log(userComment)
+        // console.log(userComment)
         // TODO: check how to get the redirects working.
         //      The errpr asks to use a file called `_redirects`, but not sure
         //      where to put it.
         // const url = "/api/submit_demand_comment"
-        const url = "/.netfly/functions/submit_demand_comment"
+        const url = "/.netlify/functions/submit_comment"
         async function post_comment(suggestion: boolean) {
             const commentEntry = {
                 type: (suggestion)? "Suggestion": "Question",
@@ -46,7 +46,7 @@
             })
             
             const json = await res.json()
-            console.log(JSON.stringify(json))
+            // console.log(JSON.stringify(json))
         }
         await post_comment(suggestion);
     }

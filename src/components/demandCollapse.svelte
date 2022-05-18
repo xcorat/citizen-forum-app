@@ -6,7 +6,6 @@
 
     let subdemands = Object.entries(subs);
 
-    console.log(subdemands)
 </script>
 
 <div tabindex="0" class="collapse collapse-arrow border border-base-300 bg-base-100 rounded-box">
