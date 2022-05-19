@@ -2,9 +2,9 @@ import { register, init, getLocaleFromNavigator, locale, _ } from 'svelte-i18n';
 import { derived, get } from 'svelte/store'
 
 function setupI18n({ withLocale: _locale } = { withLocale: 'en' }) {
-  register('en_GB', () => import('../data/translations.json').then( module => module.en_GB));
-  register('si_LK', () => import('../data/translations.json').then( module => module.si_LK));
-  register('ta_LK', () => import('../data/translations.json').then( module => module.ta_LK));
+  register('en_GB', () => import('../lang/en_GB.json') );
+  register('si_LK', () => import('../lang/si_LK.json') );
+  register('ta_LK', () => import('../lang/ta_LK.json') );
   
   locale.set(_locale);
 
@@ -26,7 +26,7 @@ const pageFormatter =
   (page_id) => 
     derived([ _ ], ( (page_id) => 
       () => 
-        (id: string, defaultTxt="") => 
+        (id: string, defaultTxt?: string) => 
           get(_)(page_id + '.' + id, { default: defaultTxt })
       )(page_id)
     );

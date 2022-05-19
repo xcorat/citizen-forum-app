@@ -5,9 +5,12 @@
     import { responses } from '../stores/responsesStore';
     import TranslatableSelect from "../components/translatableSelect.svelte";
     import topics_settings from "../data/topics_settings.json"
+    import { pageFormatter } from '$lib/i18n'
 
     // Update the translations dictionary for this page
     const page_id = "responses";
+    const _p = pageFormatter('responses');
+    
     dictionary.update( (dict) => {
                 // English is not populated fully, as the default values are set to english
         dict.en_GB[page_id] = { "citizen_sugg": "Citizen Suggestions"  };
@@ -53,7 +56,8 @@
     <div class="mt-10 mx-10 " >
         <label class="label" for="topic-select">
             <span class="label-text">
-                {$_(page_id+'.filter_topic', { default: 'Filter Topic' })}
+                <!-- {$_(page_id+'.filter_topic', { default: 'Filter Topic' })} -->
+                {$_p('filter_topic', 'Filter Topic')}
             </span>
         </label>
         <div>
