@@ -1,5 +1,10 @@
 <script lang="ts">
-    import { dictionary, locale, _ } from 'svelte-i18n';
+  import { dictionary, locale, _ } from 'svelte-i18n';
+  import { derived } from 'svelte/store'
+  import { pageFormatter } from '$lib/i18n'
+
+  const _p = pageFormatter('home')
+ 
 
 </script>
 
@@ -7,7 +12,7 @@
     <div class="hero-overlay bg-opacity-60"></div>
     <div class="hero-content text-center text-neutral-content">
       <div class="max-w-lg">
-        <h1 class="mb-5 text-5xl font-bold">{$_('home.hero_title')}</h1>
+        <h1 class="mb-5 text-5xl font-bold">{$_p('hero_title')}</h1>
         <p class="mb-5">
             {$_('home.hero_sub')}
         </p>

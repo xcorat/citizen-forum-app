@@ -1,13 +1,35 @@
-import { register, init, getLocaleFromNavigator, locale } from 'svelte-i18n';
+import { register, init, getLocaleFromNavigator, locale, _ } from 'svelte-i18n';
+import { derived, get } from 'svelte/store'
 
-locale.set('en_GB');
+function setupI18n({ withLocale: _locale } = { withLocale: 'en' }) {
+  register('en_GB', () => import('../data/translations.json').then( module => module.en_GB));
+  register('si_LK', () => import('../data/translations.json').then( module => module.si_LK));
+  register('ta_LK', () => import('../data/translations.json').then( module => module.ta_LK));
+  
+  locale.set(_locale);
 
-register('en_GB', () => import('../data/translations.json').then( module => module.en_GB));
-register('si_LK', () => import('../data/translations.json').then( module => module.si_LK));
-register('ta_LK', () => import('../data/translations.json').then( module => module.ta_LK));
 
-// TODO: getlocale doesnt work either, check fix! -- also might be en-UK
-init({
-  fallbackLocale: 'en_GB',
-  //initialLocale: getLocaleFromNavigator(),
-});
+  // TODO: getlocale doesnt work either, check fix! -- also might be en-UK
+  init({
+    fallbackLocale: 'en_GB',
+    initialLocale: getLocaleFromNavigator() || _locale,
+  });
+}
+
+/**
+ * 
+ * @param page_id the page or component label on the translations dictionaries
+ * @returns a store that's similar the svelte-i18n `$formatter` store, but uses 
+ *  the registered page 
+ */
+const pageFormatter = 
+  (page_id) => 
+    derived([ _ ], ( (page_id) => 
+      () => 
+        (id: string, defaultTxt="") => 
+          get(_)(page_id + '.' + id, { default: defaultTxt })
+      )(page_id)
+    );
+
+
+export { setupI18n, pageFormatter };
