@@ -1,8 +1,8 @@
 <script lang="ts">
-    import { onMount } from 'svelte';
-    import { dictionary, _ } from 'svelte-i18n';
+    import { add_topics } from '$lib/i18n';
 
-    import topics_settings from '../data/topics_settings.json';
+    import { onMount } from 'svelte';
+    import { locale, _ } from 'svelte-i18n';
 
     export let numDisplayed = 25;
     export let posts = [];
@@ -10,23 +10,7 @@
     // TODO: fucking terrible way to detect component mount but dont care, fix later
     let mountDone = false;
 
-    // Update the translations dictionary for this page
-    dictionary.update( (dict) => {
-        dict.si_LK['read_more'] = "තවත් කියවන්න" ;
-        // TODO: correct?
-        dict.ta_LK['read_more'] = "மேலும் படிக்க" ;
-
-        dict.en_GB['topics'] = {};
-        dict.si_LK['topics'] = {};
-        dict.ta_LK['topics'] = {};
-        for (const [key, value] of Object.entries(topics_settings)) {
-            dict.en_GB['topics'][key] = value.label.en_GB;
-            dict.si_LK['topics'][key] = value.label.si_LK;
-            dict.ta_LK['topics'][key] = value.label.ta_LK;
-        }  
-
-        return dict;
-    })
+    $: add_topics($locale);
 
     // TODO: Move the mosaic js to a seperate file/library
     function resizeGridItem(item){
@@ -99,7 +83,7 @@
                 {#if item.truncated}
                     <div class="card-actions justify-center">
                         <a href="/post/{item.index}" class="btn btn-primary">
-                            {$_('read_more', { default: 'Read More' })}
+                            {$_('responses.read_more', { default: 'Read More' })}
                         </a>
                     </div>
                 {/if}   

@@ -28,8 +28,8 @@ export function formatResponse(res, index){
     const topic_alllang = res["විෂයපථය / Subject area / பொருள் பகுதி"];
     let topicID;
     for(const [key, value] of Object.entries(topics_settings)){
-        // Just check the ennglish version. 
-        if(topic_alllang.indexOf(value.label.en_GB) != -1){
+        // Just check the english version. 
+        if(topic_alllang.indexOf(value.label.en) != -1){
             topicID = key;
             break;
         };

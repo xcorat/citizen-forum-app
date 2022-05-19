@@ -1,6 +1,6 @@
 <script lang="ts">
     //import runSample from '../lib/forms_api.js.bak'
-    import { dictionary, _ } from 'svelte-i18n';
+    import {  _ } from 'svelte-i18n';
     import PaginatedMasonicGrid from '../components/paginatedMasonicGrid.svelte';
     import { responses } from '../stores/responsesStore';
     import TranslatableSelect from "../components/translatableSelect.svelte";
@@ -10,17 +10,6 @@
     // Update the translations dictionary for this page
     const page_id = "responses";
     const _p = pageFormatter('responses');
-    
-    dictionary.update( (dict) => {
-                // English is not populated fully, as the default values are set to english
-        dict.en_GB[page_id] = { "citizen_sugg": "Citizen Suggestions"  };
-        dict.ta_LK[page_id] = {        };
-        dict.si_LK[page_id] = {
-            "citizen_sugg": "පුරවැසි අදහස්",
-            "filter_topic": "මාතෘකාව තෝරන්න"
-        }
-        return dict;
-    })
 
     let topic;
     // Do a shallow copy of the topics list. We need to add a new
@@ -28,9 +17,9 @@
     let selectable_topics_list = Object.assign({}, topics_settings);
     selectable_topics_list['all'] = {
         "label" :{
-            "en_GB": "All Topics",
-            "si_LK": "සියලු මාතෘකා",
-            "ta_LK": "All Topics"
+            "en": "All Topics",
+            "si": "සියලු මාතෘකා",
+            "ta": "All Topics"
         },
         "orderingID": 0,
     };
@@ -45,9 +34,6 @@
             posts = $responses; 
         }
     }
-
-    console.log($dictionary)
-
 
 </script>
 

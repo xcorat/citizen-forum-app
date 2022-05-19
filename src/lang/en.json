@@ -7,5 +7,11 @@
     "home": {
         "hero_title": "Contribute to Citizen Forum",
         "hero_sub": "We are a bunch of professionals voluntarily collecting ideas of citizens under 24 subject areas and these unedited ideas will be stored online with open access. We also plan to compile a list of development proposals for Sri Lanka and forward to the relevant state authorities and the parliament once the situation becomes normal again. Thank you in advance for sharing your development ideas with us! \n- Purawesi Sabhawa organizers"
-    }
+    },
+    "responses": {
+        "citizen_sugg": "Citizen Suggestions",
+        "filter_topic": "Filter Topic",
+        "read_more": "Read More"
+    },
+    "topics": {}
 }

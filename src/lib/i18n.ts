@@ -1,6 +1,8 @@
-import { register, init, getLocaleFromNavigator, locale, _ } from 'svelte-i18n';
+import { register, init, getLocaleFromNavigator, locale, _, dictionary } from 'svelte-i18n';
 import { derived, get } from 'svelte/store'
 import { browser } from "$app/env";
+
+import topics_settings from '../data/topics_settings.json';
 
 // List of locales supported with labels to display. Used by the localeSwitcher
 const locales = [
@@ -8,6 +10,22 @@ const locales = [
   {name: 'si', label: 'SI'},
   {name: 'ta', label: 'TA'}
 ];
+
+/**
+ * Add the topics list for a given locale to the dictionary. Must be called 
+ *  everytime the locale changes
+ * @param locale 
+ * 
+ */
+function add_topics(locale) {
+  dictionary.update( (dict) => {
+    for (const [key, value] of Object.entries(topics_settings)) {
+        dict[locale].topics[key] = value.label[locale];
+    }  
+
+    return dict;
+  })
+}
 
 function detectLocale(){
   let initialLocale: string;
@@ -29,9 +47,9 @@ function setupI18n({ withLocale: _locale } = { withLocale: 'en' }) {
   // DEBUG: why do we need to set? how come the store get called before 
   //    the setup is done?
   locale.set(_locale)
-  register('en', () => import('../lang/en_GB.json') );
-  register('si', () => import('../lang/si_LK.json') );
-  register('ta', () => import('../lang/ta_LK.json') );
+  register('en', () => import('../lang/en.json') );
+  register('si', () => import('../lang/si.json') );
+  register('ta', () => import('../lang/ta.json') );
   
   // DEBUG: shouldn't we set fallbackLocale to _locale?
   let fallbackLocale = 'en';
@@ -70,4 +88,4 @@ const pageFormatter =
       )(page_id)
     );
 
-export { locale, setupI18n, pageFormatter, locales };
+export { locale, setupI18n, pageFormatter, locales, add_topics };
