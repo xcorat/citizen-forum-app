@@ -4,49 +4,17 @@
     import { required, email as email_validator } from 'svelte-forms/validators';
     import { responses } from '../stores/responsesStore'
     import { get } from 'svelte/store';
-    import { dictionary, _ , locale} from 'svelte-i18n';
+    import {  _ , locale} from 'svelte-i18n';
+    import { add_topics } from '$lib/i18n';
 
     import topics_settings from '../data/topics_settings.json';
     import TranslatableSelect from '../components/translatableSelect.svelte';
 
-    import  submitGoogleForm from '../lib/submit_google_form';
+    import  submitGoogleForm from '../lib/submit_form';
     
     // TODO: read this from the path?
     const page_id = 'form'
-
-    // The dictionary with translations strings for this page.
-    dictionary.update( (dict) => {
-        // English is not populated fully, as the default values are set to english
-        dict.si_LK[page_id] = {
-            "name": "ඔබේ නම",
-            "digIDProvider": "ඩිජිටල් අනන්‍යතාව",
-            "digID": "ඩිජිටල් අනන්‍යතා සබැඳිය (ඊමේල් ලිපිනය, දුරකථන අංකය හෝ සමාජ මාධ්‍ය සබැඳිය)",
-            "topic": "විෂයපථය",
-            "title": "කෙටි මාතෘකාව",
-            "post": "ඔබේ යෝජනා",
-            // "submit": "",
-        };
-        dict.ta_LK[page_id] = {
-            "name": "உங்கள் பெயர்",
-            "digIDProvider": "டிஜிட்டல் அடையாளம்",
-            "digID": "டிஜிட்டல் அடையாளம் (email, தொலைபேசி எண் அல்லது சமூக ஊடகம் link)",
-            "topic": "பொருள் பகுதி",
-           // "title": "කෙටි මාතෘකාව",
-            "post": "உங்கள் பரிந்துரைகள்",
-            // "submit": ""
-        };
-
-        // TODO: move this to a library or something? 
-        dict.en_GB['topics'] = {};
-        dict.si_LK['topics'] = {};
-        dict.ta_LK['topics'] = {};
-        for (const [key, value] of Object.entries(topics_settings)) {
-            dict.en_GB['topics'][key] = value.label.en_GB;
-            dict.si_LK['topics'][key] = value.label.si_LK;
-            dict.ta_LK['topics'][key] = value.label.ta_LK;
-        }   
-        return dict;
-    })
+    $: add_topics($locale);
   
     // Form fields
     const name = field('name', '', [required()]);

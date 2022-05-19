@@ -7,5 +7,14 @@
     "responses": {
         "read_more": "மேலும் படிக்க"
     },
-    "topics": {}
+    "topics": {},
+    "form": {
+        "name": "உங்கள் பெயர்",
+        "digIDProvider": "டிஜிட்டல் அடையாளம்",
+        "digID": "டிஜிட்டல் அடையாளம் (email, தொலைபேசி எண் அல்லது சமூக ஊடகம் link)",
+        "topic": "பொருள் பகுதி",
+        "TODO:title": "FILL_THIS",
+        "post": "உங்கள் பரிந்துரைகள்",
+        "TODO:submit": "FILL_THIS"
+    }
 }
