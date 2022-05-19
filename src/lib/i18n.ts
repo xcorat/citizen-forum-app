@@ -1,7 +1,7 @@
 import { register, init, getLocaleFromNavigator, locale, _ } from 'svelte-i18n';
 import { derived, get } from 'svelte/store'
 
-function setupI18n({ withLocale: _locale } = { withLocale: 'en' }) {
+function setupI18n({ withLocale: _locale } = { withLocale: 'en_GB' }) {
   register('en_GB', () => import('../lang/en_GB.json') );
   register('si_LK', () => import('../lang/si_LK.json') );
   register('ta_LK', () => import('../lang/ta_LK.json') );
