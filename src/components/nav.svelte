@@ -1,9 +1,6 @@
 <script lang="ts">
-    import { dictionary, locale, _ } from 'svelte-i18n';
-
-    const locales = [{name: 'en_GB', label: 'EN'},
-                     {name: 'si_LK', label: 'SI'},
-                     {name: 'ta_LK', label: 'TA'} ];
+    import {  _ } from 'svelte-i18n';
+    import LocaleSwitcher from './controllers/localeSwitcher.svelte';
 
 </script>
 
@@ -26,12 +23,7 @@
         </ul>
     </div>
     <div class="navbar-end">
-        <div class="btn-group">
-            {#each locales as loc}
-                <button class="btn" class:btn-active="{loc.name == $locale}"
-                    on:click={() => $locale = loc.name}>{loc.label}</button>
-            {/each}
-        </div>
+        <LocaleSwitcher/>
     </div>
 </div>
     

@@ -1,13 +1,15 @@
+<script context="module">
+	import { setupI18n } from '../lib/i18n';
+	setupI18n();
+</script>
 <script>
 	import '../app.css';
 
     import { _ } from 'svelte-i18n';
 
-	import { setupI18n } from '../lib/i18n';
     import Nav from "../components/nav.svelte"
 	import Footer from '../components/footer.svelte';
 
-	setupI18n();
 
 	// TODO: this shouldn't be needed? do we need to wait for load to be done?
 
