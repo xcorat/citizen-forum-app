@@ -1,5 +1,3 @@
-import { dev } from '$app/env'
-
 const googleFormAddrDeploy = import.meta.env.VITE_GOOGLE_FORM_ADDR_DEPLOY as string;
 const googleFormAddrDebug = import.meta.env.VITE_GOOGLE_FORM_ADDR_DEBUG as string;
 const googlekey = import.meta.env.VITE_GAPI_KEY as string  

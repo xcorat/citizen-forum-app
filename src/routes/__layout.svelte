@@ -21,7 +21,6 @@
 		<div class="drawer-content flex flex-col">
 			<Nav/>
 			<slot></slot>
-
 			<Footer/>
 		</div>
 		<div class="drawer-side">
