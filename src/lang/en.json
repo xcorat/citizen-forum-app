@@ -13,5 +13,8 @@
         "filter_topic": "Filter Topic",
         "read_more": "Read More"
     },
-    "topics": {}
+    "topics": {},
+    "demands": {
+        "title": "Published demands from citizens"
+    }
 }
