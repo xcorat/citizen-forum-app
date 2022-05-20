@@ -13,14 +13,14 @@
     <div class="collapse-title">
       {#if index > 0} {index}. {/if}{ title }
     </div>
-    <div class="collapse-content"> 
+    <div class="collapse-content pr-8"> 
         {#if text}
             <p>{text}</p>
         {/if}
         {#if subdemands}
         <ol type="a">
         {#each subdemands as [idx, subdemand] }
-            <li>{subdemand}</li>
+            <li class="text-justify">{subdemand}</li>
         {/each}
         </ol>
         {/if}

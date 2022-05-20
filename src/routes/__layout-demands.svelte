@@ -10,18 +10,18 @@
 
 <div class="max-w-6xl mx-auto bg-base-100 min-h-screen">
 <!-- Navbar -->
-    <div class="sticky top-0 z-50 navbar bg-base-300 rounded"> 
-        <div class="mx-auto">
-            <a class="normal-case text-2xl ">{$_('demands.title')}</a>
+    <div class="sticky top-0 z-50 navbar bg-base-300 rounded drop-shadow-md"> 
+        <div class="ml-14 mr-auto">
+            <a class="normal-case text-2xl">{$_('demands.title')}</a>
         </div>
-        <div class="navbar-end">
+        <div class="right-10">
             <LocaleSwitcher/>
         </div>
     </div>
     <div class='max-w-6xl mx-auto bg-base-100 min-h-screen'>
         <slot></slot>
     </div>
-    <div class="sticky footer bottom-0 z-50 bg-base-300 rounded w-full">
+    <div class="sticky footer bottom-0 z-50 bg-base-300 rounded w-full drop-shadow-md">
         <span class="flex demands-link  mx-auto align-center">
             <div class="place-self-center">
                 {$_('demands.aragalaya_link_text')} 
@@ -48,6 +48,10 @@
         font-weight: 400;
         /* padding: 15px; */
         
+    }
+
+    .sticky {
+        text-shadow: 1px 1px 1px grey;
     }
 
 </style>

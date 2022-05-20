@@ -26,7 +26,7 @@
     <div class="title text-center mx-14 my-4">
         <h1>{@html demands_dict.title}</h1>
     </div>
-    <div class="intro">
+    <div class="intro text-justify">
         <h2>{@html demands_dict.intro.title}</h2>
         <p>{@html demands_dict.intro.text}</p>
     </div>
@@ -42,10 +42,12 @@
 </div>
 
 <style>
-    /* .intro :global(p) {
-        padding-top: 1em;
-    }
+    /* .intro :global(p) { */
+        /* text-indent: 2rem; */
+        /* padding-top: 1em; */
 
+    /* } */
+    /*
     h1 {
         font-size: 1.3em;
         font-weight:600;
