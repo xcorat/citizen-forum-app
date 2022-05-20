@@ -12,7 +12,7 @@
 <!-- Navbar -->
     <div class="sticky top-0 z-50 navbar bg-base-300 rounded"> 
         <div class="mx-auto">
-            <a href="/" class="normal-case text-2xl ">{$_('demands.title')}</a>
+            <a class="normal-case text-2xl ">{$_('demands.title')}</a>
         </div>
         <div class="navbar-end">
             <LocaleSwitcher/>
