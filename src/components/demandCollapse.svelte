@@ -4,12 +4,13 @@
     export let title;
     export let subs;
 
-    let subdemands = Object.entries(subs);
+    let subdemands;
+    $: subdemands = Object.entries(subs);
 
 </script>
 
 <div tabindex="0" class="collapse collapse-arrow border border-base-300 bg-base-100 rounded-box">
-    <div class="collapse-title text-xl font-medium">
+    <div class="collapse-title">
       {#if index > 0} {index}. {/if}{ title }
     </div>
     <div class="collapse-content"> 
@@ -25,3 +26,11 @@
         {/if}
     </div>
 </div>
+
+<style>
+    .collapse-title {
+        font-size: 1.1;
+        font-weight: 600;
+    }
+
+</style>

@@ -12,6 +12,7 @@
     locale.subscribe((val) => {
         if( val ){
             import('../data/demands/' + val + '.json').then(res => {
+                console.log(res.demands_list[0].subs);
                 demands_dict = res;
             });
         }
@@ -19,14 +20,39 @@
 
 </script>
 
+<div class="flex justify-center">
 
-<div>
-    <h1>{@html demands_dict.title}</h1>
-    <h2>{@html demands_dict.intro.title}</h2>
-    <p>{@html demands_dict.intro.text}</p>
-    <h3>{@html demands_dict.demands_list_title}</h3>
-    {#each demands_dict.demands_list as demand}
-        <DemandCollapse index={demand.enum_idx} subs={demand.subs}
-            title={demand.title} text={demand.text} ></DemandCollapse>
-    {/each}
+<article class="prose dark:prose-invert max-w-5xl prose-h1:text-xl prose-h2:text-xl">
+    <div class="title text-center mx-14 my-4">
+        <h1>{@html demands_dict.title}</h1>
+    </div>
+    <div class="intro">
+        <h2>{@html demands_dict.intro.title}</h2>
+        <p>{@html demands_dict.intro.text}</p>
+    </div>
+    <div class="demand-list my-4">
+        <h2 class="m-4">{@html demands_dict.demands_list_title}</h2>
+        {#each demands_dict.demands_list as demand}
+            <DemandCollapse index={demand.enum_idx} subs={demand.subs}
+                title={demand.title} text={demand.text} ></DemandCollapse>
+        {/each}
+    </div>
+</article>
+
 </div>
+
+<style>
+    /* .intro :global(p) {
+        padding-top: 1em;
+    }
+
+    h1 {
+        font-size: 1.3em;
+        font-weight:600;
+    }
+
+    h2{
+        font-size: 1.2em;
+        font-weight: 500;
+    } */
+</style>
