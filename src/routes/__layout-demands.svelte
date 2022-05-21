@@ -12,7 +12,6 @@
 <!-- Navbar -->
     <div class="sticky top-0 z-50 navbar bg-base-300 rounded drop-shadow-md p-4">
         <!-- <div class="max-w-5xl"> -->
-            <div class="max-w-4"></div>
             <div class="mr-auto">
                 <a class="normal-case text-2xl">{$_('demands.title')}</a>
             </div>
@@ -24,8 +23,8 @@
     <div class='max-w-6xl mx-auto bg-base-100 min-h-screen p-4'>
         <slot></slot>
     </div>
-    <div class="sticky footer bottom-0 z-50 bg-base-300 rounded w-full drop-shadow-md">
-        <span class="flex demands-link  mx-auto align-center">
+    <div class="sticky footer bottom-0 z-50 bg-base-300 rounded w-full drop-shadow-md p-4">
+        <span class="flex demands-link mx-auto align-center text-l xs:text-xl">
             <div class="place-self-center">
                 {$_('demands.aragalaya_link_text')} 
             </div>
@@ -47,7 +46,7 @@
     }
 
     .demands-link {
-        font-size: x-large;
+        /* font-size: x-large; */
         font-weight: 400;
         /* padding: 15px; */
         
