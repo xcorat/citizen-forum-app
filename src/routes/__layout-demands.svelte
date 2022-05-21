@@ -10,15 +10,18 @@
 
 <div class="max-w-6xl mx-auto bg-base-100 min-h-screen">
 <!-- Navbar -->
-    <div class="sticky top-0 z-50 navbar bg-base-300 rounded drop-shadow-md"> 
-        <div class="ml-14 mr-auto">
-            <a class="normal-case text-2xl">{$_('demands.title')}</a>
-        </div>
-        <div class="right-10">
-            <LocaleSwitcher/>
-        </div>
+    <div class="sticky top-0 z-50 navbar bg-base-300 rounded drop-shadow-md p-4">
+        <!-- <div class="max-w-5xl"> -->
+            <div class="max-w-4"></div>
+            <div class="mr-auto">
+                <a class="normal-case text-2xl">{$_('demands.title')}</a>
+            </div>
+            <div class="">
+                <LocaleSwitcher/>
+            </div>
+        <!-- </div> -->
     </div>
-    <div class='max-w-6xl mx-auto bg-base-100 min-h-screen'>
+    <div class='max-w-6xl mx-auto bg-base-100 min-h-screen p-4'>
         <slot></slot>
     </div>
     <div class="sticky footer bottom-0 z-50 bg-base-300 rounded w-full drop-shadow-md">
