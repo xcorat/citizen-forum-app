@@ -12,7 +12,6 @@
     locale.subscribe((val) => {
         if( val ){
             import('../data/demands/' + val + '.json').then(res => {
-                console.log(res.demands_list[0].subs);
                 demands_dict = res;
             });
         }
