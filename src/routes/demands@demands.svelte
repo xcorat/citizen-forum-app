@@ -30,7 +30,7 @@
         <p>{@html demands_dict.intro.text}</p>
     </div>
     <div class="demand-list my-4">
-        <h2 class="m-4">{@html demands_dict.demands_list_title}</h2>
+        <h2 class="m-2">{@html demands_dict.demands_list_title}</h2>
         {#each demands_dict.demands_list as demand}
             <DemandCollapse index={demand.enum_idx} subs={demand.subs}
                 title={demand.title} text={demand.text} ></DemandCollapse>
