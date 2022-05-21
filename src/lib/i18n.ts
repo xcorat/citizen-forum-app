@@ -6,9 +6,9 @@ import topics_settings from '../data/topics_settings.json';
 
 // List of locales supported with labels to display. Used by the localeSwitcher
 const locales = [
-  {name: 'en', label: 'EN'},
-  {name: 'si', label: 'SI'},
-  {name: 'ta', label: 'TA'}
+  {name: 'en', label: 'English'},
+  {name: 'si', label: 'සිංහල'},
+  {name: 'ta', label: 'தமிழ்'}
 ];
 
 /**
