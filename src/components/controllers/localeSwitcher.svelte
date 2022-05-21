@@ -12,9 +12,10 @@
         <ul class="menu gap-1 p-1" tabindex="0">
             {#each locales as loc}
             <li>
-                <div class="flex" class:btn-warning="{loc.name == $locale}">
+                <div class="flex" class:btn-warning="{loc.name == $locale}"
+                    on:click={() => $locale = loc.name}>{loc.label}
                     <!-- <img loading="lazy" width="20" height="20" alt="English" src="https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.0/svg/1f1ec-1f1e7.svg"> -->
-                    <span class="flex flex-1 justify-between" on:click={() => $locale = loc.name}>{loc.label}</span>
+                    <span class="flex flex-1 justify-between"></span>
                 </div>
             </li>
             {/each}
