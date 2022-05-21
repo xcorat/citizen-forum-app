@@ -4,14 +4,6 @@
 
 </script>
 
-
-<!-- <div class="btn-group">
-    {#each locales as loc}
-        <button class="btn" class:btn-active="{loc.name == $locale}"
-            on:click={() => $locale = loc.name}>{loc.label}</button>
-    {/each}
-</div> -->
-
 <div title="Change Language" class="dropdown dropdown-end">
     <div tabindex="0" class="btn btn-ghost gap-1 normal-case ">
         <LangSelect/>
@@ -20,10 +12,10 @@
         <ul class="menu gap-1 p-1" tabindex="0">
             {#each locales as loc}
             <li>
-                <button class="flex" class:btn-active="{loc.name == $locale}">
+                <div class="flex" class:btn-warning="{loc.name == $locale}">
                     <!-- <img loading="lazy" width="20" height="20" alt="English" src="https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.0/svg/1f1ec-1f1e7.svg"> -->
-                    <span class="flex flex-1 justify-between">{loc.label}</span>
-                </button>
+                    <span class="flex flex-1 justify-between" on:click={() => $locale = loc.name}>{loc.label}</span>
+                </div>
             </li>
             {/each}
         </ul>
