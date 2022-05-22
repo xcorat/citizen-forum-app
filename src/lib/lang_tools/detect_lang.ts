@@ -15,9 +15,8 @@ async function detect_lang(text: string | string[]) {
     
     // cannot be run on browser
     if( browser ) return null;
+    if( !text ) return null;
     
-    const url = 'https://translation.googleapis.com/language/translate/v2/detect';
-
     async function detectLanguage() {
         let [detections] = await translate.detect(text);
         detections = Array.isArray(detections) ? detections : [detections];
@@ -28,8 +27,10 @@ async function detect_lang(text: string | string[]) {
         return detections;
     }
       
-    //const langs = await detectLanguage();
-    return null;
+    // return type from google:
+    // { confidence: 1, language: 'si', input: <input> }
+    const langs = await detectLanguage();
+    return langs || [];
 }
 
 export { detect_lang };
