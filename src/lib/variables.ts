@@ -2,9 +2,9 @@ import { dev, browser } from '$app/env'
 
 function get_gcs_lang() {
     // This shouldn't be called from the browser, so return a dummy
-    // TODO:
+    // TODO: https://github.com/xcorat/citizen-forum-app/issues/5
     
-    if(dev) return {
+    if(browser) return {
         project_id:     import.meta.env.VITE_GCS_LANG_PROJECT_ID,
         client_email:   import.meta.env.VITE_GCS_LANG_CLIENT_EMAIL,
         private_key:    import.meta.env.VITE_GCS_LANG_PRIVATE_KEY,
