@@ -3,6 +3,7 @@
 	"version": "0.0.1",
 	"scripts": {
 		"dev": "svelte-kit dev",
+		"dev_env": "env-cmd svelte-kit dev",
 		"build": "svelte-kit build",
 		"package": "svelte-kit package",
 		"preview": "svelte-kit preview",
@@ -33,6 +34,9 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"@google-cloud/translate": "^6.3.1",
+		"dotenv": "^16.0.1",
+		"env-cmd": "^10.1.0",
 		"svelte-forms": "^2.3.1",
 		"svelte-select": "^5.0.0-beta.9"
 	}

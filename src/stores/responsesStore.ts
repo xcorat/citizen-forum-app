@@ -1,6 +1,6 @@
 import {writable} from 'svelte/store'
 import responsesJSON from '../data/citizen_forum_data_nocontact_1.json';
-import { formatResponse, updateLocalResponses } from '../lib/format_posts'
+import { formatResponse, updateLocalResponses } from '../lib/format_posts';
 
 const defaultResponse = {
     index: 0,

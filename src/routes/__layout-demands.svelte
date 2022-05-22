@@ -1,6 +1,9 @@
 <script context="module">
 	import { setupI18n } from '../lib/i18n';
+    import { detect_lang } from '$lib/lang_tools/detect_lang'
 	setupI18n();
+
+    // detect_lang('sdfsdff').then((res) => console.log(res))
 </script>
 
 <script lang='ts'>
