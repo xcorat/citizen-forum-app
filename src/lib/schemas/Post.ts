@@ -90,4 +90,15 @@ export default class Post {
             locale: new Intl.Locale('en-GB')
         })
     }
+
+    public get_displayable() {
+        let excerpt = this.text;
+        let truncated = false;
+        if (this.text.length > 300) {
+            excerpt = this.text.slice(0,300) + ' ...';
+            truncated = true;
+        }
+        
+        return { ...this, excerpt, truncated };
+    }
 }
