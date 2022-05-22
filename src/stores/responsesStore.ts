@@ -1,6 +1,7 @@
 import {writable} from 'svelte/store'
 import responsesJSON from '../data/citizen_forum_data_nocontact_1.json';
 import { formatResponse, updateLocalResponses } from '../lib/format_posts';
+import Post from '$lib/schemas/Post';
 
 const defaultResponse = {
     index: 0,
@@ -16,8 +17,10 @@ const defaultResponse = {
 }
 
 function createResponseArray(){
-    const resArray = responsesJSON.map((res, index) => formatResponse(res, index) )
-
+    const resArray = responsesJSON.map((res, index) =>
+        Post.from_gform_post(res, index).get_displayable()
+    )
+    // console.log(resArray)
     return resArray;
 }
 

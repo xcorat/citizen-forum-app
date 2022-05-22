@@ -23,7 +23,8 @@ export default class Post {
 
     get topic() {
         return ('topic' in this.categories)? 
-            this.categories['topic'] as string: undefined;
+            this.categories['topic'] as string:
+            undefined;
     }
 
     constructor(post) {
@@ -57,7 +58,7 @@ export default class Post {
             let topicID;
             for(const [key, value] of Object.entries(topics_settings)){
                 // Just check the ennglish version. 
-                if(topic_alllang.indexOf(value.label.en_GB) != -1){
+                if(topic_alllang.indexOf(value.label.en) != -1){
                     topicID = key;
                     break;
                 };
@@ -98,7 +99,6 @@ export default class Post {
             excerpt = this.text.slice(0,300) + ' ...';
             truncated = true;
         }
-        
-        return { ...this, excerpt, truncated };
+        return { ...this, topic: this.topic, excerpt, truncated };
     }
 }
