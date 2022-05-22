@@ -32,7 +32,8 @@ function createResponsesStore() {
     function insert(res) {
         const updatedResponse = updateLocalResponses(res);
         update((resArray) => {
-            const formattedResponse = formatResponse(updatedResponse, resArray.length);
+            // TODO: possible DEBUG
+            const formattedResponse = Post.from_gform_post(updatedResponse, resArray.length).get_displayable();
             resArray.push(formattedResponse);
 
             return resArray;
