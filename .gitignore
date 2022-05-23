@@ -11,3 +11,25 @@ node_modules
 *.bak
 googleapis_credentials.json
 src/data/citizen_forum_data_1.json
+
+# Created by https://www.gitignore.io/api/visualstudiocode
+# Edit at https://www.gitignore.io/?templates=visualstudiocode
+
+### VisualStudioCode ###
+# Maybe .vscode/**/*  or .vscode/* instead - see https://stackoverflow.com/questions/32964920/should-i-commit-the-vscode-folder-to-source-control
+.vscode
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+### VisualStudioCode Patch ###
+# Ignore all local history of files
+**/.history
+
+# End of https://www.gitignore.io/api/visualstudiocode
+
+## This should be automatically ignore? 
+# according to: https://github.com/netlify/cli/issues/282
+# Maybe I didn't run the init properly?
+.netlify

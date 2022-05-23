@@ -28,7 +28,7 @@
     
     function updatePosts(){
         if(topic?.value && topic.value != "all") {
-            posts = $responses.filter( (post) => post.topicID == topic.value);
+            posts = $responses.filter( (post) => post.topic == topic.value);
         }
         else {
             posts = $responses; 

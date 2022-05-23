@@ -77,9 +77,9 @@
     <div class="item blog">
         <div class="card bg-base-100 shadow-xl content" class:trunc={item.truncated}>
             <div class="card-body"> 
-                <h2 class="card-title">{$_('topics.'+item.topicID)}</h2>
-                <p>{@html item.exerpt.replace(/\n/g, '<br>')}</p>
-                <div class="card-author">by {item.author}</div>
+                <h2 class="card-title">{$_('topics.'+item.topic)}</h2>
+                <p>{@html item.excerpt.replace(/\n/g, '<br>')}</p>
+                <div class="card-author">by {item.author.name}</div>
                 {#if item.truncated}
                     <div class="card-actions justify-center">
                         <a href="/post/{item.index}" class="btn btn-primary">
