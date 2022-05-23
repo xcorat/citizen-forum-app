@@ -1,24 +1,32 @@
 import Author from './Author';
-import { create_uuid } from './functions';
+import { create_uid, tstamp_from_sl_tstring } from './functions';
 import topics_settings from '../../data/topics_settings';
+import { info } from '$lib/logging';
 
+interface UIDBase {
+    uid?: string,
+    text: string,
+    tstamp: Date,
+}
 
 export default class Post {
-    uuid: string; // timestamp is embedded in the UUID
+    uid: string; // timestamp is embedded in the UID, this is not Univeraslly unique
     author: Author;
     text: string;
     title: string;
     // The categories need a category type so different category types don't mix,
     //  the first level property of the category is the type
-    categories: {}; // topic_ids and other hierarchical taxonomies
+    categories: {}; // topic_ids and other hierarchical taxonomies { <cat_name>: <cat_id> }
     tags: string[]; // language and other non-hierarchical tags
-    locale: Intl.Locale;
+    locale?: Intl.Locale;
+    meta?: any; // Any metadata, like the gform_index
 
     get timestamp() {
         /**
          * get the timestamp from the UUID.
          */
-        return new Date(this.uuid);
+        console.log("timestamp from uuid not implemented yet..");
+        return new Date(this.uid);
     }
 
     get topic() {
@@ -28,7 +36,7 @@ export default class Post {
     }
 
     constructor(post) {
-        this.uuid = post.uuid;
+        this.uid = Post.create_uid(post);
         this.author = new Author(post.author)
         if(!post.text) throw TypeError("Post text is required");
         this.text = post.text;
@@ -37,16 +45,16 @@ export default class Post {
         this.categories = post.categories;
         this.tags = post.tags;
         this.locale = post.locale;
+        this.meta = post.meta;
     }
 
-    static from_gform_post(gform_post, uuid=null) {
-        const tstamp = new Date(gform_post["කාල මුද්‍රාව"]);
+    static from_gform_post(gform_post, gform_index) {
+        const tstamp = tstamp_from_sl_tstring(gform_post["Timestamp"]) ;
+        // const tstamp = tstamp_from_sl_tstring(gform_post["කාල මුද්‍රාව"]) ;
         const text = gform_post["ඔබේ යෝජනා / Your suggestions / உங்கள் பரிந்துரைகள்"];
-        if(!uuid){
-            uuid = create_uuid(text, tstamp)
-        }
+        const meta = { gform_index };
         const author = new Author({
-            uuid: 'none',
+            uuid: null,
             name: gform_post["ඔබේ නම / your name / உங்கள் பெயர்"],
             dig_id: {
                 type: gform_post["ඩිජිටල් අනන්‍යතාව / Digital identity / டிஜிட்டல் அடையாளம்"],
@@ -62,7 +70,7 @@ export default class Post {
                     topicID = key;
                     break;
                 };
-                // TODO: use `o23` as generic topic in case of error
+                // TODO: use `o23` as generic topic in caseclear of error
                 topicID = 'o23';
             }
             return topicID;
@@ -72,17 +80,18 @@ export default class Post {
             topic: topic_id,
         }
         return new this({
-            uuid,
             author,
-            text: gform_post["ඔබේ යෝජනා / Your suggestions / உங்கள் பரிந்துரைகள்"],
+            text,
+            tstamp,
             categories,
+            meta,
         });
     }
 
     static dummy_post(){
         return new this({
-            uuid: 0,
             author: Author.anon(),
+            tstamp: new Date(),
             text: 'dummy',
             title: '',
             // TODO: sanity check on categories
@@ -100,5 +109,14 @@ export default class Post {
             truncated = true;
         }
         return { ...this, topic: this.topic, excerpt, truncated };
+    }
+
+
+    static create_uid(post: UIDBase): string {
+        const newUID = create_uid(post.text, post.tstamp);
+        if('uid' in post && post.uid != newUID){
+            throw TypeError('UID of the post does not match the post content')
+        }
+        else return newUID;
     }
 }

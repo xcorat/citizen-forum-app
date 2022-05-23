@@ -28,7 +28,7 @@ export default class Author {
 
     static anon(){
         return new this({
-            uuid: 0,
+            uuid: null, // add the userId of actual anon user
             name: 'Anonymous',
             dig_ids: [{
                 type: null,
@@ -36,4 +36,5 @@ export default class Author {
             }]
         })
     }
+
 }
