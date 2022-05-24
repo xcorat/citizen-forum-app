@@ -25,9 +25,9 @@ export async function get({ params }) {
     // test with 10 objects
     // const posts_slice = posts.slice(0, 10)
     try {
-        const postids = addPostsMany(posts);
+        const postids = await addPostsMany(posts);
         if(postids) {
-            info(await postids);
+            info(postids);
             info("Posts submission done.")
             return {
                 body: {
