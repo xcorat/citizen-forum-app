@@ -21,12 +21,15 @@ export default class Post {
     locale?: Intl.Locale;
     meta?: any; // Any metadata, like the gform_index
 
-    get timestamp() {
+    get timestamp(): Date {
         /**
          * get the timestamp from the UUID.
          */
         console.log("timestamp from uuid not implemented yet..");
-        return new Date(this.uid);
+        const str_tstamp_sec = this.uid.substring(0, 8);
+        const str_tstamp_ms = this.uid.substring(8, 9);
+
+        return new Date(parseInt(str_tstamp_sec, 16)*1000 + 4*parseInt(str_tstamp_ms, 16));
     }
 
     get topic() {

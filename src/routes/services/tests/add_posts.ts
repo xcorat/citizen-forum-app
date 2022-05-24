@@ -27,6 +27,8 @@ export async function get({ params }) {
     try {
         const postids = addPostsMany(posts);
         if(postids) {
+            info(await postids);
+            info("Posts submission done.")
             return {
                 body: {
                     ids: postids,

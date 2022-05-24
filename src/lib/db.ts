@@ -34,6 +34,13 @@ async function dbConnect(action: string, payload: Payload){
         async function connect () {
             const res = await fetch(url, config)
             const json = await res.json()
+
+            // DEBUG: TODO: check for errors!!  
+            if(res.status >= 400){
+                error('in dbConnect');
+                error(json);
+                throw Error(json);
+            }
             return json;
         }
         const res = await connect();
@@ -141,7 +148,7 @@ async function addPost(post: Post) {
         "collection": mongo.users,
         documents: authors,
     }
-    
+    info("Adding authors ...");
     const res_authors = await dbConnect('insertMany', payload_authors);
     
     const authorIds = res_authors?.insertedIds;
@@ -151,6 +158,8 @@ async function addPost(post: Post) {
     }   
 
     // Detect the language of each post
+
+    info("Language detection ...");
     // const langs = ['si', 'si', 'si', 'si', 'si', 'si', 'si', 'si', 'si', 'si' ];// 
     const lang_detections = await detect_lang( posts.map((post => post.text)) );
     if( !lang_detections ||
@@ -159,7 +168,7 @@ async function addPost(post: Post) {
 
         throw Error("Detecting language failed");
     }
-
+    info(lang_detections.map(det=>det.language))
     // Create posts
     const post_docs = posts.map((post, index) => {
         const document: any = {
@@ -167,7 +176,7 @@ async function addPost(post: Post) {
             text: post.text,
             locale: lang_detections[index].language,
         }
-        document._id = post.uid
+        document._id = { "$oid": post.uid };
         if(post.title) document.title = post.title;
         if(post.categories) document.categories = post.categories;
         if(post.tags) document.tags = post.tags;
@@ -175,8 +184,6 @@ async function addPost(post: Post) {
 
         return document;
     })
-
-    console.log(post_docs);
 
     // TODO: Add limit to the query
     const payload = {
@@ -186,7 +193,9 @@ async function addPost(post: Post) {
         documents: post_docs,
     }
 
+    info("Adding the posts ...")
     const res = await dbConnect('insertMany', payload);
+    console.log(res)
     return res?.insertedIds;
 }
 
