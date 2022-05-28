@@ -54,32 +54,7 @@ class PostsList {
     public filter(fn) { return this._posts.filter(fn); }
 }
 
-const _posts: PostsList = new PostsList([]);
 
-const _filters = (() => {
-    const filters = {
-        topic: undefined,
-    }
-    const {subscribe, update, set} = writable(filters);
-
-    const _set = (params: URLSearchParams ) => {
-        // Does the parameter automatically convert?
-        // if(!(params instanceof URLSearchParams)) params = new URLSearchParams(params);
-        console.log('filters/set', params.toString())
-        const topic_id = params.get('topic_id');
-        if(topic_id) filters.topic = topic_id;
-        else filters.topic = undefined;
-
-        set(filters);
-    }
-
-    return { subscribe,
-             update,
-             set: _set
-            }
-})();
-
-const _all_posts = writable(_posts);
 
 /**
  * A store to keep track of the posts displayed. 
@@ -92,6 +67,33 @@ function create_store(){
 
     const _filled_range = { newest: '', oldest: '' };
     let exhausted_queries = []; // What type?
+
+    const _posts: PostsList = new PostsList([]);
+
+    const _filters = (() => {
+        const filters = {
+            topic: undefined,
+        }
+        const {subscribe, update, set} = writable(filters);
+
+        const _set = (params: URLSearchParams ) => {
+            // Does the parameter automatically convert?
+            // if(!(params instanceof URLSearchParams)) params = new URLSearchParams(params);
+            console.log('filters/set', params.toString())
+            const topic_id = params.get('topic_id');
+            if(topic_id) filters.topic = topic_id;
+            else filters.topic = undefined;
+
+            set(filters);
+        }
+
+        return { subscribe,
+                update,
+                set: _set
+                }
+    })();
+
+    const _all_posts = writable(_posts);
 
     // TODO: Probably a very bad way to do this, but works for now :/
     async function _load(params?: URLSearchParams){
@@ -172,6 +174,23 @@ function create_store(){
         return $posts.slice(start, end)
     }
 
+    const _displayable = derived( [locale, _all_posts, _filters],
+                                 ([ $locale, $_all_posts, $_filters ]) => {
+        // Filter according to the locale/lang
+        let filtered_posts = $_all_posts.filter(
+            post => `${post.locale}` == $locale
+        );
+        // Filter according to the topic
+        if($_filters.topic && $_filters.topic != 'all'){
+            filtered_posts = filtered_posts.filter(
+                post => `${post.categories.topic}` == $_filters.topic
+            );
+        }
+        // info(['filtered1:', filtered_posts]);
+        // if(filtered_posts.length < POSTS_PER_PAGE) _load();
+        console.log('changed stores', $_filters, filtered_posts.length, $_all_posts.length);
+        return filtered_posts.map(post => post.get_displayable());
+    });
     // _displayable.subscribe((posts) => { info(['posts updated:', posts]) })
 
     // so the subscription really is to the _displayable store. The main store can 
@@ -182,25 +201,9 @@ function create_store(){
 }
 
 
-const _displayable = derived( [locale, _all_posts, _filters],
-                              ([ $locale, $_all_posts, $_filters ]) => {
-        // Filter according to the locale/lang
-    let filtered_posts = $_all_posts.filter(
-        post => `${post.locale}` == $locale
-    );
-        // Filter according to the topic
-    if($_filters.topic && $_filters.topic != 'all'){
-        filtered_posts = filtered_posts.filter(
-            post => `${post.categories.topic}` == $_filters.topic
-        );
-    }
-        // info(['filtered1:', filtered_posts]);
-        // if(filtered_posts.length < POSTS_PER_PAGE) _load();
-    console.log('changed stores', $_filters, filtered_posts.length, $_all_posts.length);
-    return filtered_posts.map(post => post.get_displayable());
-});
+
 
 export const posts = create_store();
-export const displayed_posts = _displayable;
-export const filters = _filters ;
+// export const displayed_posts = _displayable;
+// export const filters = _filters ;
 // export const posts = derived([ locale, posts_alllang ], )

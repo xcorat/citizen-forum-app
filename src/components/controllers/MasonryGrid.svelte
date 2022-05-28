@@ -2,7 +2,7 @@
     import { _ } from 'svelte-i18n';
     import PostCard from './PostCard.svelte';
     import {  onMount, onDestroy } from 'svelte';
-    import { displayed_posts as posts } from '../../stores/postsStore';
+    import { posts } from '../../stores/postsStore';
 
     function resizeGridItem(grid, item){
         // TODO: just remove the 'px' and use '+' operator?

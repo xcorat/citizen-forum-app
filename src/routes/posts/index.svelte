@@ -1,20 +1,15 @@
 <script context="module">
     import { locale } from "svelte-i18n";
     import { get as getval } from 'svelte/store'
-    import { posts, filters } from "../../stores/postsStore";
+    import { posts } from "../../stores/postsStore";
     
     import { browser } from "$app/env";
 
     export const POSTS_PER_PAGE = 25;
 
-	export async function load({ url, fetch }) {
-        posts.load({ url, fetch });
-        console.log(['postModule/load', browser ]);
-
-		return {
-			props: { }
-		};
-	}
+    // TODO: for SSR, we should implement the data fetching on the
+    //      shadow endpoint and export it here initially.
+    //  So maybe inplement the initial get on that side?
 
 </script>
 <script lang="ts">
@@ -26,7 +21,7 @@
     import { pageFormatter } from '$lib/i18n';
     import { goto } from "$app/navigation";
     import { page } from '$app/stores';
-import { onMount } from "svelte";
+    import { onMount } from "svelte";
 
     /**
      * TODO: need to debug and check this!
@@ -47,8 +42,8 @@ import { onMount } from "svelte";
 
     // export let posts;
 
-
     let topic;
+
     // Do a shallow copy of the topics list. We need to add a new
     //   selectable without changing the original.
     let selectable_topics_list = Object.assign({}, topics_settings);

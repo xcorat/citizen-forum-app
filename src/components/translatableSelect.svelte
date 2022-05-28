@@ -16,7 +16,7 @@
 
     // Don't subscribe, this keeps track of the locale of the page, so we can update
     //      the topics list when the user changes the locale settings.
-    let currentLocale = get(locale);
+    let currentLocale = $locale;
 
     // To send the input selected message to the top controller. This is used by the 
     //  pagination component
