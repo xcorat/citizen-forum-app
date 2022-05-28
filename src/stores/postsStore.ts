@@ -1,4 +1,4 @@
-import { writable, derived, get as get } from "svelte/store";
+import { writable, derived, get } from "svelte/store";
 import { locale } from "svelte-i18n";
 import Post from "$lib/schemas/Post";
 import { info, error } from "$lib/logging";
@@ -27,7 +27,13 @@ class PostsList {
 
     get length() { return this._posts_map.size; }
 
+    /**
+     * Insert the post/s to the list and return number inserted
+     * @param posts 
+     * @returns the number inserted
+     */
     public insert(posts: Post[] | Post) {
+        const old_length = this._posts.length;
         posts = Array.isArray(posts)? posts: [ posts ];
         posts.forEach( post => this._posts_map.set(post.uid, post) );
         this._posts_map = new Map([...this._posts_map].sort( (uid_a, uid_b) => +uid_a - +uid_b ));
@@ -35,6 +41,7 @@ class PostsList {
         this._posts = [...this._posts_map.values()]
         // this._posts = new Array<Post>(...this._posts_map.values().sort());
         console.log('update -> ', this._posts.length);
+        return this._posts.length - old_length;
     }
 
     public insertLast(post: Post){
@@ -49,9 +56,28 @@ class PostsList {
 
 const _posts: PostsList = new PostsList([]);
 
-const _filters = writable({
-    topic: undefined,
-});
+const _filters = (() => {
+    const filters = {
+        topic: undefined,
+    }
+    const {subscribe, update, set} = writable(filters);
+
+    const _set = (params: URLSearchParams ) => {
+        // Does the parameter automatically convert?
+        // if(!(params instanceof URLSearchParams)) params = new URLSearchParams(params);
+        console.log('filters/set', params.toString())
+        const topic_id = params.get('topic_id');
+        if(topic_id) filters.topic = topic_id;
+        else filters.topic = undefined;
+
+        set(filters);
+    }
+
+    return { subscribe,
+             update,
+             set: _set
+            }
+})();
 
 const _all_posts = writable(_posts);
 
@@ -74,6 +100,12 @@ function create_store(){
         if(!params) params = new URLSearchParams('');
         // Take searchParams from the returned query, so we know nothing was changed
         //      when we keep track of exhausted queries.
+        if(!params.has('limit')) params.set('limit', '100');
+        
+        // Trigger a redraw while the info is beaing fetched.
+        _filters.set(params);
+
+        // TODO: decide here if we really need to fetch more data
         const [{ posts, searchParams, latest, query_exhausted }] = await Promise.all([
             _fetch(`posts.json?${params}`, { credentials: 'include' }).then(r => r.json()),
         ])
@@ -84,19 +116,18 @@ function create_store(){
                 _filled_range.newest = `${posts[0]._id}`;
                 _filled_range.oldest = `${posts[posts.length-1]._id}`;
             }
-            _posts.insert(posts.map(post => new Post(post)));
-            _all_posts.set(_posts);
+            // call the set function only if the insertion of at least one element was 
+            //      successful
+            if(_posts.insert( posts.map(post => new Post(post)) )){
+                _all_posts.set(_posts);
+            }
+
         }
     }
     
     async function load({ url, fetch }) {
-        info('postsStore/load')
+        info(['postsStore/load', url])
         let params = new URLSearchParams(url.search);
-        // TODO: this needs to be updated properly to determine when to get the latest
-        // Get the latest if no filters or skip are set
-        if( !params.has('latest') && !(params.has('skip') || params.has('locale') || params.has('topic_id')) ){
-            params.set('latest', 'true');
-        }
         _fetch = fetch;
         _base_url = url;
          _load(params)
@@ -143,28 +174,33 @@ function create_store(){
 
     // _displayable.subscribe((posts) => { info(['posts updated:', posts]) })
 
+    // so the subscription really is to the _displayable store. The main store can 
+    // change without the display be notified as long as the _displayable does not change
+    // TODO: for above to work, we need to track when _all_posts can change
+    //      without effecting the displayed (ex: prefetch?)
     return { ..._displayable, insert, load, len, slice }
 }
 
 
 const _displayable = derived( [locale, _all_posts, _filters],
-    ([ $locale, $_all_posts, $_filters ]) => {
-       
-       // Filter according to the locale/lang
-       let filtered_posts = $_all_posts.filter( post => 
-           `${post.locale}` == $locale 
-       );
-       // Filter according to the topic
-       if($_filters.topic && $_filters.topic != 'all'){
-           filtered_posts = filtered_posts.filter(post => 
-           `${post.categories.topic}` == $_filters.topic
-           );
-       }
-       // info(['filtered1:', filtered_posts]);
-       // if(filtered_posts.length < POSTS_PER_PAGE) _load();
-       return filtered_posts.map(post => post.get_displayable());
+                              ([ $locale, $_all_posts, $_filters ]) => {
+        // Filter according to the locale/lang
+    let filtered_posts = $_all_posts.filter(
+        post => `${post.locale}` == $locale
+    );
+        // Filter according to the topic
+    if($_filters.topic && $_filters.topic != 'all'){
+        filtered_posts = filtered_posts.filter(
+            post => `${post.categories.topic}` == $_filters.topic
+        );
+    }
+        // info(['filtered1:', filtered_posts]);
+        // if(filtered_posts.length < POSTS_PER_PAGE) _load();
+    console.log('changed stores', $_filters, filtered_posts.length, $_all_posts.length);
+    return filtered_posts.map(post => post.get_displayable());
 });
 
 export const posts = create_store();
 export const displayed_posts = _displayable;
+export const filters = _filters ;
 // export const posts = derived([ locale, posts_alllang ], )

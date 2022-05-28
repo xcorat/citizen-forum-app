@@ -4,43 +4,45 @@
     import {  onMount, onDestroy } from 'svelte';
     import { displayed_posts as posts } from '../../stores/postsStore';
 
-    // We need to make sure document is loaded before calculating the grid
-    let mountDone = false;
-
-    function resizeGridItem(item){
-        let grid = document.getElementsByClassName("masonry-grid")[0];
-        let rowHeight = +window.getComputedStyle(grid).getPropertyValue('grid-auto-rows');
-        let rowGap = +window.getComputedStyle(grid).getPropertyValue('grid-row-gap');
+    function resizeGridItem(grid, item){
+        // TODO: just remove the 'px' and use '+' operator?
+        let rowHeight = parseInt(window.getComputedStyle(grid).getPropertyValue('grid-auto-rows'));
+        let rowGap = parseInt(window.getComputedStyle(grid).getPropertyValue('grid-row-gap'));
+        
         // TODO: Just a quick debug, see how to fix this properly
         let contentDiv = item.querySelector('.content');
         if(!contentDiv) {
             console.log("ERROR: (MasonryGrid)", item)
             return;
         }
+        
         let rowSpan = Math.ceil((contentDiv.getBoundingClientRect().height+rowGap)/(rowHeight+rowGap));
         item.style.gridRowEnd = "span "+rowSpan;
 
     }
 
     function resizeAllGridItems(){
-        if(!mountDone) return;
+        console.log('resizeall', $posts.length)
+        let grid = document.getElementsByClassName("masonry-grid")[0];
         let allItems = document.getElementsByClassName("post-item");
         for(let x=0; x<allItems.length; x++){
-            resizeGridItem(allItems[x]);
+            resizeGridItem(grid, allItems[x]);
         }
     }
 
     // Detect change in displayed posts, and trigger redraw
-    const posts_unsubscribe = posts.subscribe(resizeAllGridItems);
+    // const posts_unsubscribe = posts.subscribe(resizeAllGridItems);
+    
 
     onMount(() => {
-        mountDone = true;
         resizeAllGridItems();
-        window.addEventListener("resize", resizeAllGridItems);
+        let mgrid = document.getElementsByClassName("masonry-grid")[0];
+        new ResizeObserver(resizeAllGridItems).observe(mgrid)
+        // window.addEventListener("resize", resizeAllGridItems);
     });
 
     onDestroy( () => {
-        posts_unsubscribe();
+        // posts_unsubscribe();
     });
 
 </script>

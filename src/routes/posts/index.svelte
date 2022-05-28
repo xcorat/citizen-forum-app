@@ -1,28 +1,21 @@
 <script context="module">
     import { locale } from "svelte-i18n";
     import { get as getval } from 'svelte/store'
-    import { posts } from "../../stores/postsStore";
+    import { posts, filters } from "../../stores/postsStore";
     
     import { browser } from "$app/env";
 
     export const POSTS_PER_PAGE = 25;
 
 	export async function load({ url, fetch }) {
-        // const params = url.searchParams;
-        // // TODO: how to check if we need to get the latest?
-        // if( !params.has('latest') && !(params.has('skip') || params.has('locale') || params.has('topic_id')) ){
-        //     params.set('latest', true);
-        //     info(url);
-        //     // goto(url, { replaceState: true });
-        // }
         posts.load({ url, fetch });
-        info(['postModule/load', browser ])
+        console.log(['postModule/load', browser ]);
+
 		return {
-			props: {
-				// posts
-			}
+			props: { }
 		};
 	}
+
 </script>
 <script lang="ts">
     //import runSample from '../lib/forms_api.js.bak'
@@ -31,10 +24,22 @@
     import TranslatableSelect from "../../components/translatableSelect.svelte";
     import topics_settings from "../../data/topics_settings.json";
     import { pageFormatter } from '$lib/i18n';
-    import { info } from "$lib/logging";
     import { goto } from "$app/navigation";
     import { page } from '$app/stores';
+import { onMount } from "svelte";
 
+    /**
+     * TODO: need to debug and check this!
+     * @param name
+     * @param value
+     */
+    async function update_page(name: string, value: string){
+        const url = $page.url;
+        url.searchParams.set(name, value)
+        posts.load({ url, fetch });
+        if(browser) await goto(`${url}`);
+        // else redirect?
+    }
 
     // Update the translations dictionary for this page
     const page_id = "responses";
@@ -56,13 +61,17 @@
         "orderingID": 0,
     };
 
-    function updatePosts(){
-        $page.url.searchParams.set('topic_id', topic?.value);
-        const url = `${$page.url}`
-        info(url)
-        goto(url)
-        // posts.set_topic(topic?.value);
+    async function updatePosts(){
+        console.debug('updateposts')
+        update_page('topic_id', topic?.value);
     }
+
+    onMount(() => {
+        // we dont need too many calls initially, and this wont work on SSR anyway
+        locale.subscribe( (locale) => {
+            update_page('locale', locale);
+        });
+    })
 
 
 </script>

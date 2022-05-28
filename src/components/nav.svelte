@@ -20,7 +20,7 @@
         <div class="flex-none hidden lg:block">
             <ul class="menu menu-horizontal p-5">
                 <li><a href="/form">{$_('nav.fill')}</a></li>
-                <li><a href="/responses">{$_('nav.read_responses')}</a></li>
+                <li><a href="/posts">{$_('nav.read_responses')}</a></li>
             </ul>
         </div>
         <LocaleSwitcher/>

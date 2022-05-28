@@ -33,11 +33,13 @@ function build_filter({ topic_id='', locale='', newer_than='', older_than='', fi
         const tstamp = tstamp_from_uid(older_than);
         if(tstamp) filter_id["$lt"] = { "$oid" : older_than };
     }
+
+    console.log(_filter)
     
     if(JSON.stringify(filter_id) != '{}') _filter['_id'] = filter_id;
             
-    if(JSON.stringify(_filter) != '{}') return null;
-    else return _filter;
+    if(JSON.stringify(_filter) != '{}') return _filter;
+    else return null;
 }
 
 /**

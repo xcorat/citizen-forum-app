@@ -238,6 +238,7 @@ async function getPosts({ limit=25, skip=0, filter={}, sort={ _id: -1 } }:
         latest = false; 
     }
     if(+skip > 0) { payload.skip = skip; latest = false; }
+
     const res = await dbConnect('find', payload);
     // The query returned all possible data when the limit is larger
     //      than the returned number of documents.
@@ -247,6 +248,7 @@ async function getPosts({ limit=25, skip=0, filter={}, sort={ _id: -1 } }:
     // This should mean that 'the same query will not return any data'
     //  So maybe keep track of that query if so..
     const query_exhausted = res?.documents?.length < limit;
+    info([ "db/getPosts payload", filter, limit, res?.documents?.length, query_exhausted ])
     return {
         documents: res?.documents,
         latest,

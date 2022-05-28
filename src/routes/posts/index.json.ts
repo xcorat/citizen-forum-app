@@ -5,8 +5,6 @@ import { info } from '$lib/logging';
 const COOLDOWN_TIME = 500;
 
 export async function get({ url: { searchParams }, locals }) {
-    info([ "posts/get searchParams...", searchParams ])
-    // console.log(url)
     try {
         const res = await getPosts(searchParams);
         const posts = res?.documents;
