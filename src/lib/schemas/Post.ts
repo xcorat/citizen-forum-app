@@ -1,5 +1,5 @@
 import Author from './Author';
-import { create_uid, tstamp_from_sl_tstring } from './functions';
+import { create_uid, tstamp_from_sl_tstring, tstamp_from_uid } from './functions';
 import topics_settings from '../../data/topics_settings';
 import { info } from '$lib/logging';
 
@@ -16,20 +16,18 @@ export default class Post {
     title: string;
     // The categories need a category type so different category types don't mix,
     //  the first level property of the category is the type
-    categories: {}; // topic_ids and other hierarchical taxonomies { <cat_name>: <cat_id> }
+    categories: {
+        topic?: string,
+    }; // topic_ids and other hierarchical taxonomies { <cat_name>: <cat_id> }
     tags: string[]; // language and other non-hierarchical tags
     locale?: Intl.Locale;
     meta?: any; // Any metadata, like the gform_index
 
+    /**
+     * get the timestamp from the UUID.
+     */
     get timestamp(): Date {
-        /**
-         * get the timestamp from the UUID.
-         */
-        console.log("timestamp from uuid not implemented yet..");
-        const str_tstamp_sec = this.uid.substring(0, 8);
-        const str_tstamp_ms = this.uid.substring(8, 9);
-
-        return new Date(parseInt(str_tstamp_sec, 16)*1000 + 4*parseInt(str_tstamp_ms, 16));
+        return tstamp_from_uid(this.uid);
     }
 
     get topic() {
@@ -39,8 +37,13 @@ export default class Post {
     }
 
     constructor(post) {
-        this.uid = Post.create_uid(post);
-        this.author = new Author(post.author)
+        this.uid = post._id? post._id: Post.create_uid(post);
+        if(post.author){
+            this.author = new Author(post.author);
+        }
+        else if(post.authorId){
+            this.author = Author.from_id(post.authorId);
+        }
         if(!post.text) throw TypeError("Post text is required");
         this.text = post.text;
         this.title = post.title
@@ -100,7 +103,7 @@ export default class Post {
             // TODO: sanity check on categories
             categories: {},
             tags: [],
-            locale: new Intl.Locale('en-GB')
+            locale: new Intl.Locale('en')
         })
     }
 
@@ -116,10 +119,38 @@ export default class Post {
 
 
     static create_uid(post: UIDBase): string {
+        if(!post.tstamp) throw TypeError("Cannot create uid without tstamp.")
         const newUID = create_uid(post.text, post.tstamp);
         if('uid' in post && post.uid != newUID){
             throw TypeError('UID of the post does not match the post content')
         }
         else return newUID;
+    }
+
+    /**
+     * 
+     * @returns the timestamp as the value of the object, this making
+     *          the comparisons easier
+     * 
+     * WARNING - The value can be the same for two posts with the same timestamp,
+     *              so use the number value only for timestamp.
+     */
+    public valueOf() {
+        // return this.timestamp.getTime(); -- less work if we do this manually
+        const str_tstamp_sec = this.uid.substring(0, 8);
+        const str_tstamp_ms = this.uid.substring(8, 9);
+
+        return parseInt(str_tstamp_sec, 16)*1000 + 4*parseInt(str_tstamp_ms, 16);
+    }
+    [Symbol.toPrimitive](hint: "default"): number;
+    [Symbol.toPrimitive](hint: string): string | number {
+        switch (hint) {
+        case "number":
+            return this.valueOf();
+        case "string":
+            return this.toString();
+        default:
+            return this.valueOf();
+        }
     }
 }

@@ -68,3 +68,10 @@ export const tstamp_from_sl_tstring = (tstamp: string) =>{
     }
     return utc;
 }
+
+export const tstamp_from_uid = (uid: string) => {
+    const str_tstamp_sec = uid.substring(0, 8);
+    const str_tstamp_ms = uid.substring(8, 9);
+
+    return new Date(parseInt(str_tstamp_sec, 16)*1000 + 4*parseInt(str_tstamp_ms, 16)) || undefined;
+}

@@ -10,7 +10,7 @@ export default class Author {
     get main_id() { return this.dig_ids[0]; }
 
     constructor(author) {
-        this.uuid = author.uuid;
+        this.uuid = author?.uuid || author?._id;
         this.name = author.name;
         if(!this.name) throw TypeError("Cannot find property name.")
         if(Array.isArray(author.dig_ids)){
@@ -24,6 +24,10 @@ export default class Author {
             // Digital id is required
             throw TypeError("Digital Id of the author is required.")
         }
+    }
+
+    static from_id(authorId: string){
+        return new this({ uuid: authorId, name: 'not fetched', dig_ids: [{type:'', id:''}]})
     }
 
     static anon(){

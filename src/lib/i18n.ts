@@ -53,7 +53,8 @@ function setupI18n({ withLocale: _locale } = { withLocale: 'en' }) {
   
   // DEBUG: shouldn't we set fallbackLocale to _locale?
   let fallbackLocale = 'en';
-  let initialLocale = detectLocale();
+  // Check if this works
+  let initialLocale = _locale || detectLocale();
 
   // DEBUG: why do we need this? shouldn't fallback work if init is not set?
   if (!initialLocale) initialLocale = fallbackLocale;
@@ -61,6 +62,7 @@ function setupI18n({ withLocale: _locale } = { withLocale: 'en' }) {
   
   // Store the locale on the browser local storage for later retrieval
   locale.subscribe((loc) => {
+    // TODO: do we also need to change the locale on url search params here?
     if (loc && browser){
       localStorage.setItem('svelte-i18n-locale', loc);
     }

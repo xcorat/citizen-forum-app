@@ -1,10 +1,11 @@
 import { mongo } from '$lib/variables';
 import type Post from '$lib/schemas/Post';
 import type Author from '$lib/schemas/Author';
-import { create_uid } from '$lib/schemas/functions'
 import { detect_lang } from '$lib/lang_tools/detect_lang'
 import '$lib/logging'
 import { info, error } from '$lib/logging';
+
+const MAX_DOCS_LIMIT = 100;
 
 interface Payload {
     dataSource: string,
@@ -13,12 +14,27 @@ interface Payload {
 
     document?: any, // For insertOne
     filter?: {}, // For find
+    sort?: {},
+    limit?: number,
+    skip?: number
+}
+
+interface PostSchema {
+    _id?: string,
+    authorId: string,
+    test: string,
+    title: string,
+    categories: any, // Make { <cat_name>: <cat_id> }
+    tags: string[],
+    locale?: Intl.Locale,
+    meta: any,
 }
 
 async function dbConnect(action: string, payload: Payload){
     if( !([ 'insertOne', 'findOne', 'find', 'insertMany' ].includes(action)) ){
         // TODO: return error?
-        return null;
+        error("Invalid database operation:" + action);
+        return null; // throw Error()!
     }
     const url = mongo.uri + '/action/' + action;
     const config = {
@@ -34,7 +50,7 @@ async function dbConnect(action: string, payload: Payload){
         async function connect () {
             const res = await fetch(url, config)
             const json = await res.json()
-
+            
             // DEBUG: TODO: check for errors!!  
             if(res.status >= 400){
                 error('in dbConnect');
@@ -43,8 +59,8 @@ async function dbConnect(action: string, payload: Payload){
             }
             return json;
         }
-        const res = await connect();
-        return res;
+        const data = await connect();
+        return data;
     }
     catch(e) {
         // TODO: Do some error checking and sanitizing here
@@ -160,7 +176,6 @@ async function addPost(post: Post) {
     // Detect the language of each post
 
     info("Language detection ...");
-    // const langs = ['si', 'si', 'si', 'si', 'si', 'si', 'si', 'si', 'si', 'si' ];// 
     const lang_detections = await detect_lang( posts.map((post => post.text)) );
     if( !lang_detections ||
         !Array.isArray(lang_detections) ||
@@ -199,4 +214,44 @@ async function addPost(post: Post) {
     return res?.insertedIds;
 }
 
-export { addAuthor, addPost, addPostsMany };
+// Most likely we want to keep the timestamp-hash => uid implementation
+//  on db side, and not have the user worry about it.
+//  if that is the case we can just use the timestamp as part of the db_api
+async function getPosts({ limit=25, skip=0, filter={}, sort={ _id: -1 } }:
+                        { limit?: number, skip?: number, filter?: any, sort?: any })
+    : Promise<any> {
+    // TODO: do we need to do any checking here?
+    limit = (limit < 1)? 1: (limit > MAX_DOCS_LIMIT)? MAX_DOCS_LIMIT: limit; 
+    const payload: Payload = {
+        "dataSource": mongo.dataSource,
+        database: mongo.db,
+        collection: mongo.posts,
+        sort,
+        limit,
+        skip,
+    }
+    let latest = true;
+    // TODO: check if filter has empty keys too
+    // WARING: filter can have keys that are empty..
+    if(filter && JSON.stringify(filter) != '{}') {
+        payload.filter = filter;
+        latest = false; 
+    }
+    if(+skip > 0) { payload.skip = skip; latest = false; }
+    const res = await dbConnect('find', payload);
+    // The query returned all possible data when the limit is larger
+    //      than the returned number of documents.
+    //      Do check if this is better to be moved to the caller, 
+    //      and just return the limit.
+    //
+    // This should mean that 'the same query will not return any data'
+    //  So maybe keep track of that query if so..
+    const query_exhausted = res?.documents?.length < limit;
+    return {
+        documents: res?.documents,
+        latest,
+        query_exhausted,
+    }
+}
+
+export { addAuthor, addPost, addPostsMany, getPosts };

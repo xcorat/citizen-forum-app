@@ -1,24 +1,26 @@
-import { getPosts } from '$lib/db'
+import { getPosts } from '$lib/api/posts';
+import { info } from '$lib/logging';
+
+// Time to wait between latest requests in milliseconds
+const COOLDOWN_TIME = 500;
 
 export async function get({ url: { searchParams }, locals }) {
-    const limit = +searchParams.get('limit') || undefined;
-    const skip = +searchParams.get('skip') || undefined;
-    const topic_id = searchParams.get('topic_id') || undefined;
-    const locale = searchParams.get('locale') || undefined
-
-    console.log("posts/get ...")
-    let filter: any = (topic_id)? { "categories" :{"topic" : topic_id }}: undefined;
-    if(locale){
-        if(filter) filter["locale"] = locale;
-        else filter = { locale };
-    } 
+    info([ "posts/get searchParams...", searchParams ])
+    // console.log(url)
     try {
-        const posts = await getPosts(limit, skip, filter);
-        if(!posts) throw Error("Could not fetch data...");
+        const res = await getPosts(searchParams);
+        const posts = res?.documents;
+        // const posts = await get_posts(searchParams);
+        if(!posts) throw Error("Could not fetch data...", posts);
+
+        // TODO: should we just return the response here? why more shit?
         return {
             status: 200,
             body: {
                 posts,
+                searchParams,
+                latest: res?.latest || false,
+                query_exhausted: res.query_exhausted || false,
             }
         }
     }

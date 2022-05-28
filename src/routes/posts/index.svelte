@@ -2,11 +2,21 @@
     import { locale } from "svelte-i18n";
     import { get as getval } from 'svelte/store'
     import { posts } from "../../stores/postsStore";
+    
+    import { browser } from "$app/env";
 
     export const POSTS_PER_PAGE = 25;
 
 	export async function load({ url, fetch }) {
+        // const params = url.searchParams;
+        // // TODO: how to check if we need to get the latest?
+        // if( !params.has('latest') && !(params.has('skip') || params.has('locale') || params.has('topic_id')) ){
+        //     params.set('latest', true);
+        //     info(url);
+        //     // goto(url, { replaceState: true });
+        // }
         posts.load({ url, fetch });
+        info(['postModule/load', browser ])
 		return {
 			props: {
 				// posts
@@ -21,6 +31,10 @@
     import TranslatableSelect from "../../components/translatableSelect.svelte";
     import topics_settings from "../../data/topics_settings.json";
     import { pageFormatter } from '$lib/i18n';
+    import { info } from "$lib/logging";
+    import { goto } from "$app/navigation";
+    import { page } from '$app/stores';
+
 
     // Update the translations dictionary for this page
     const page_id = "responses";
@@ -43,7 +57,11 @@
     };
 
     function updatePosts(){
-        posts.set_topic(topic?.value);
+        $page.url.searchParams.set('topic_id', topic?.value);
+        const url = `${$page.url}`
+        info(url)
+        goto(url)
+        // posts.set_topic(topic?.value);
     }
 
 

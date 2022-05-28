@@ -1,6 +1,16 @@
 <script context="module">
 	import { setupI18n } from '../lib/i18n';
+	
+	// import { goto } from '$app/navigation';
+	// function goBack(defaultRoute = '/home') {
+		// 	const ref = document.referrer;
+		// 	goto(ref.length > 0 ? ref : defaultRoute)
+		// }
+		
+	// TODO: get locale info from the url search params if they exists
+	//		and pass while initializing the i18n
 	setupI18n();
+
 </script>
 
 <script>
