@@ -1,30 +1,37 @@
 <script lang="ts">
     import { page } from '$app/stores';
-    import { responses } from '../../stores/responsesStore';
+    import { posts } from "../../stores/postsStore";
+    import { _ } from 'svelte-i18n';
     
-    const postId: number = parseInt($page.params.id);
-    let postfound = true;
+    const postId = $page.params.id;
+    enum Status {
+        NotFound = -1,
+        Init,
+        Found,
+    } 
+    
+    let status: Status = Status.Init;
 
-    if(postId == NaN || postId >= $responses.length) {
-        postfound = false;
-    }
+    const post = posts.find_post(postId)?.get_displayable();
+    status = (post)? Status.Found: Status.NotFound;
 
-    const post = $responses[postId];
 </script>
 
-{#if postfound}
+{#if status == Status.Found}
 <article class="prose lg:prose-lg">
-    <h2 class="m-5">{post.topic}</h2>
+    <h2 class="m-5">{post.title || $_('topics.'+post.topic_id) }</h2>
     <div class="m-5 post-content">
-        <p>{@html post.post.replace(/\n/g, '<br>')}</p>
+        <p>{@html post.text.replace(/\n/g, '<br>')}</p>
     </div>
     <div class="m-5 post-author">
-        <p>by {post.author}</p>
+        <p>by {post.author.name}</p>
     </div>
 </article>
-{:else}
+{:else if status == Status.NotFound}
 <article class="prose m-10">
-<h1>Post not found</h1>
-<a href="/">Return to home</a>
+    <h1>Post not found</h1>
+    <a href="/">Return to home</a>
 </article>
+{:else}
+    <h1>Loading...</h1>
 {/if}

@@ -41,8 +41,8 @@ export default class Post {
         if(post.author){
             this.author = new Author(post.author);
         }
-        else if(post.authorId){
-            this.author = Author.from_id(post.authorId);
+        else if(post.authorId, post.authorName){
+            this.author = Author.from_id(post.authorId, post.authorName);
         }
         if(!post.text) throw TypeError("Post text is required");
         this.text = post.text;
@@ -114,7 +114,9 @@ export default class Post {
             excerpt = this.text.slice(0,300) + ' ...';
             truncated = true;
         }
-        return { ...this, topic: this.topic, excerpt, truncated };
+        const title = this.title;
+        const author = { id: this.author.uuid, name: this.author.name }
+        return { ...this, title, topic_id: this.topic, excerpt, truncated, author };
     }
 
 
@@ -142,6 +144,7 @@ export default class Post {
 
         return parseInt(str_tstamp_sec, 16)*1000 + 4*parseInt(str_tstamp_ms, 16);
     }
+
     [Symbol.toPrimitive](hint: "default"): number;
     [Symbol.toPrimitive](hint: string): string | number {
         switch (hint) {

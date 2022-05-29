@@ -1,12 +1,15 @@
 <script context="module">
     import { locale } from "svelte-i18n";
-    import { get } from 'svelte/store'
     import { posts } from "../../stores/postsStore";
     
     import { browser } from "$app/env";
 
     export const POSTS_PER_PAGE = 25;
 
+    export async function load({ url, fetch }){
+        posts.load({ url, fetch });
+        return {}
+    }
     // TODO: for SSR, we should implement the data fetching on the
     //      shadow endpoint and export it here initially.
     //  So maybe inplement the initial get on that side?
@@ -21,7 +24,7 @@
     import { pageFormatter } from '$lib/i18n';
     import { goto } from "$app/navigation";
     import { page } from '$app/stores';
-    import { onMount } from "svelte";
+    import { onDestroy, onMount } from "svelte";
 
     /**
      * TODO: need to debug and check this!
@@ -40,9 +43,12 @@
     const page_id = "responses";
     const _p = pageFormatter('responses');
 
+    let page_mounted = false;
+
     // export let posts;
 
     let topic;
+    // let locale_unsubscribe: Unsubscriber;
 
     // Do a shallow copy of the topics list. We need to add a new
     //   selectable without changing the original.
@@ -61,12 +67,13 @@
         update_page('topic_id', topic?.value);
     }
 
-    onMount(() => {
         // we dont need too many calls initially, and this wont work on SSR anyway
-        locale.subscribe( (locale) => {
-            update_page('locale', locale);
-        });
-        
+    const localte_unsubscribe = locale.subscribe( (locale) => {
+        if(page_mounted) update_page('locale', locale);
+    });
+
+    onMount(() => {
+        page_mounted = true;
         // Update the topic parameter from the page URLSearchParams
         // const topic_id = $page.url.searchParams.get('topic_id');
         // if(topic_id && (topic_id != 'all' || selectable_topics_list[topic_id] ))
@@ -75,8 +82,11 @@
         //     value: selectable_topics_list[topic_id][get(locale)]
         // }
         // console.log(selectable_topics_list[topic_id], topic)
-    })
+    });
 
+    onDestroy( () => {
+        localte_unsubscribe();
+    })
 
 </script>
 

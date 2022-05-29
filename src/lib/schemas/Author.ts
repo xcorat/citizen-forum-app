@@ -26,8 +26,14 @@ export default class Author {
         }
     }
 
-    static from_id(authorId: string){
-        return new this({ uuid: authorId, name: 'not fetched', dig_ids: [{type:'', id:''}]})
+    static from_id(authorId: string, authorName?: string | undefined){
+        // TODO: not the right way to do this
+        // We probably just want to keep the displayed posts with the
+        // author name, and have this be the real user instead of half data
+        return new this({ uuid: authorId,
+                          name: authorName || 'anonymous',
+                          dig_ids: [{type:'', id:''}]
+                        })
     }
 
     static anon(){

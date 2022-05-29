@@ -49,10 +49,17 @@ class PostsList {
         this._posts.unshift(post);
     }
 
+    public find(uid: string): Post | null {
+        console.log(uid, this._posts_map, this._posts_map.get(uid))
+        if(this._posts_map.has(uid)) return this._posts_map.get(uid);
+        else return null;
+    }
+
     public filter(fn) { return this._posts.filter(fn); }
 }
 
-
+// We want this to persist between imports?
+const _posts: PostsList = new PostsList([]);
 
 /**
  * A store to keep track of the posts displayed. 
@@ -65,8 +72,7 @@ function create_store(){
 
     const _filled_range = { newest: '', oldest: '' };
     let exhausted_queries = []; // What type?
-
-    const _posts: PostsList = new PostsList([]);
+    let last_query_exhausted = false;
 
     const _filters = (() => {
         const filters = {
@@ -110,7 +116,10 @@ function create_store(){
             _fetch(`posts.json?${params}`, { credentials: 'include' }).then(r => r.json()),
         ])
         info({searchParams, latest, query_exhausted });
-        if(query_exhausted) exhausted_queries.push(searchParams);
+        if(query_exhausted){
+            exhausted_queries.push(searchParams);
+            last_query_exhausted = true;
+        }
         if(Array.isArray(posts)){
             if(latest){
                 _filled_range.newest = `${posts[0]._id}`;
@@ -149,15 +158,7 @@ function create_store(){
         // });
         return Promise.resolve("postId-24charstring");
     }
-    
-    function set_topic(topic_id: string){
-        if(topic_id == 'all') topic_id = undefined;
-        _filters.update( filters => {
-            filters.topic = topic_id;
-            return filters;
-        });
-    }
-        
+           
     function len(){
         let len = 0;
         const unsubscribe = _displayable.subscribe(p => { len = p.length; });
@@ -189,13 +190,20 @@ function create_store(){
         console.log('changed stores', $_filters, filtered_posts.length, $_all_posts.length);
         return filtered_posts.map(post => post.get_displayable());
     });
-    // _displayable.subscribe((posts) => { info(['posts updated:', posts]) })
+
+    /**
+     * 
+     * @param uid uid of the post to search
+     * @returns the post 
+     */
+    const find_post = (uid: string) => _posts.find(uid);
+
 
     // so the subscription really is to the _displayable store. The main store can 
     // change without the display be notified as long as the _displayable does not change
     // TODO: for above to work, we need to track when _all_posts can change
     //      without effecting the displayed (ex: prefetch?)
-    return { ..._displayable, insert, load, len, slice }
+    return { ..._displayable, insert, load, len, slice, find_post }
 }
 
 

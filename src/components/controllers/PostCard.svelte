@@ -5,12 +5,12 @@
 </script>
 <div class="card bg-base-100 shadow-xl content" class:trunc={post.truncated}>
     <div class="card-body"> 
-        <h2 class="card-title">{$_('topics.'+post.topic)}</h2>
+        <h2 class="card-title">{$_('topics.'+post.topic_id)}</h2>
         <p>{@html post.excerpt.replace(/\n/g, '<br>')}</p>
-        <!-- <div class="card-author">by {item.author.name}</div> -->
+        <div class="card-author">by {post.author.name}</div>
         {#if post.truncated}
             <div class="card-actions justify-center">
-                <a href="/post/{post.index}" class="btn btn-primary">
+                <a href="/post/{post.uid}" class="btn btn-primary">
                     {$_('responses.read_more', { default: 'Read More' })}
                 </a>
             </div>
