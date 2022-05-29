@@ -1,9 +1,7 @@
-import { writable, derived, get } from "svelte/store";
+import { writable, derived } from "svelte/store";
 import { locale } from "svelte-i18n";
 import Post from "$lib/schemas/Post";
 import { info, error } from "$lib/logging";
-import { page } from '$app/stores'
-import { stringify } from "postcss";
 
 // TODO: Do people, like store these in localStorage? ::cough:: ::cough:: gunDB support?
 const MAX_POSTS = 500;

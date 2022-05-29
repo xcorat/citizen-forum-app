@@ -1,6 +1,6 @@
 <script context="module">
     import { locale } from "svelte-i18n";
-    import { get as getval } from 'svelte/store'
+    import { get } from 'svelte/store'
     import { posts } from "../../stores/postsStore";
     
     import { browser } from "$app/env";
@@ -57,7 +57,7 @@
     };
 
     async function updatePosts(){
-        console.debug('updateposts')
+        console.log('updateposts', topic)
         update_page('topic_id', topic?.value);
     }
 
@@ -66,6 +66,15 @@
         locale.subscribe( (locale) => {
             update_page('locale', locale);
         });
+        
+        // Update the topic parameter from the page URLSearchParams
+        // const topic_id = $page.url.searchParams.get('topic_id');
+        // if(topic_id && (topic_id != 'all' || selectable_topics_list[topic_id] ))
+        // topic = {
+        //     label: topic_id,
+        //     value: selectable_topics_list[topic_id][get(locale)]
+        // }
+        // console.log(selectable_topics_list[topic_id], topic)
     })
 
 

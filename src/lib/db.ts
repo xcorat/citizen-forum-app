@@ -14,6 +14,7 @@ interface Payload {
 
     document?: any, // For insertOne
     filter?: {}, // For find
+    pipeline?: any[], // For aggregate
     sort?: {},
     limit?: number,
     skip?: number
@@ -31,7 +32,7 @@ interface PostSchema {
 }
 
 async function dbConnect(action: string, payload: Payload){
-    if( !([ 'insertOne', 'findOne', 'find', 'insertMany' ].includes(action)) ){
+    if( !([ 'insertOne', 'findOne', 'find', 'insertMany', 'aggregate' ].includes(action)) ){
         // TODO: return error?
         error("Invalid database operation:" + action);
         return null; // throw Error()!
@@ -256,4 +257,87 @@ async function getPosts({ limit=25, skip=0, filter={}, sort={ _id: -1 } }:
     }
 }
 
-export { addAuthor, addPost, addPostsMany, getPosts };
+// Most likely we want to keep the timestamp-hash => uid implementation
+//  on db side, and not have the user worry about it.
+//  if that is the case we can just use the timestamp as part of the db_api
+async function getPostswithUsers({ limit=25, skip=0, filter={}, sort={ _id: -1 } }:
+                        { limit?: number, skip?: number, filter?: any, sort?: any })
+    : Promise<any> {
+    // TODO: do we need to do any checking here?
+    limit = (limit < 1)? 1: (limit > MAX_DOCS_LIMIT)? MAX_DOCS_LIMIT: limit; 
+
+    // TODO: is match required for aggregation?
+    // TODO: check if filter has empty keys too
+    // WARING: filter can have keys that are empty..
+    // if(filter && JSON.stringify(filter) != '{}') {
+    //     const match = filter;
+    // }
+    let latest = true;
+    // TODO: check if filter has empty keys too
+    // WARING: filter can have keys that are empty..
+    if(filter && JSON.stringify(filter) != '{}') {
+        latest = false; 
+    }
+    if(+skip > 0) latest = false;
+    else skip = 0;
+
+    const addUserName = [{ 
+        "$lookup": {
+            "from": "users",
+            "localField": "authorId",
+            "foreignField": "_id",
+            "as": "user"
+        }
+    },
+    {
+        "$unwind": "$user"
+    },
+    {
+        "$addFields": {
+            "authorName": "$user.name"
+        }
+    }];
+
+    const project = {
+        "authorId": 1,
+        "authorName": 1,
+        "text": 1,
+        "title": 1,
+        "locale": 1,
+        "categories": 1,
+        "tags": 1
+    }
+
+    const pipeline = [
+        { "$match": filter },
+        { "$sort": sort },
+        { "$limit": limit },
+        { "$skip": skip },
+        ...addUserName,
+        { "$project": project }
+    ]
+    
+    const payload: Payload = {
+        "dataSource": mongo.dataSource,
+        database: mongo.db,
+        collection: mongo.posts,
+        pipeline,
+    }
+    const res = await dbConnect('aggregate', payload);
+    // The query returned all possible data when the limit is larger
+    //      than the returned number of documents.
+    //      Do check if this is better to be moved to the caller, 
+    //      and just return the limit.
+    //
+    // This should mean that 'the same query will not return any data'
+    //  So maybe keep track of that query if so..
+    const query_exhausted = res?.documents?.length < limit;
+    info([ "db/getPosts payload", filter, limit, res?.documents?.length, query_exhausted ])
+    return {
+        documents: res?.documents,
+        latest,
+        query_exhausted,
+    }
+}
+
+export { addAuthor, addPost, addPostsMany, getPostswithUsers as getPosts };
