@@ -1,4 +1,4 @@
-import { getPosts as getPostsDB} from '$lib/db';
+import { getPostswithUsers as getPostsDB} from '$lib/db';
 import { info } from '$lib/logging';
 import { tstamp_from_uid } from '$lib/schemas/functions';
 

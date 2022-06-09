@@ -15,7 +15,6 @@
     $: add_topics($locale);
 
     let displayIndices = {start: 0, end: numDisplayed};
-    let displayed = [];
 
     // TODO: this is on a seperate function call so we can call the redrawing of
     //  posts whwnever the posts change

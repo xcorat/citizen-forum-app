@@ -2,7 +2,7 @@
     import { form, field } from 'svelte-forms';
     import Select from 'svelte-select';
     import { required, email as email_validator } from 'svelte-forms/validators';
-    import { responses } from '../stores/responsesStore'
+    import { posts } from '../stores/postsStore';
     import { get } from 'svelte/store';
     import {  _ , locale} from 'svelte-i18n';
     import { add_topics } from '$lib/i18n';
@@ -55,7 +55,7 @@
         // Add data to the google form
         submitGoogleForm(data);
 
-        responses.insert(data)
+        posts.insert(data)
         npForm.reset();
         $npForm.dirty = false;
         console.log(get(npForm).summary);
