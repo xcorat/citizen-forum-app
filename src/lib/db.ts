@@ -60,7 +60,10 @@ async function dbConnect(action: string, payload: Payload){
             }
             return json;
         }
+        console.log('connecting...');
         const data = await connect();
+        console.log(data)
+
         return data;
     }
     catch(e) {
@@ -76,7 +79,6 @@ async function dbConnect(action: string, payload: Payload){
  * @returns the UUID of the author object inserted to the DB. return falsy on failure.
  */
 async function addAuthor(author: Author){
-
     // TODO: do we need to do any checking here?
     const document = {
         name: author.name,
@@ -111,17 +113,14 @@ async function addPost(post: Post) {
     if(!authorId){
         console.log("error adding the author, the post will not have an author.");
     }
-
-    if(post.uid){
-        // TODO: better error handling
-        console.log("Cannot insert post with a UID.");
-        return null;
-    }
-
+    
     const document: any = {
-        authorId,
+        authorId: { "$oid": authorId },
         text: post.text,
     }
+
+    document._id = { "$oid": post.uid };
+
     if(post.title) document.title = post.title;
     if(post.categories) document.categories = post.categories;
     if(post.tags) document.tags = post.tags;
@@ -278,6 +277,10 @@ async function getPostswithUsers({ limit=25, skip=0, filter={}, sort={ _id: -1 }
     if(filter && JSON.stringify(filter) != '{}') {
         latest = false; 
     }
+    else {
+        filter = {};
+    }
+
     if(+skip > 0) latest = false;
     else skip = 0;
 
@@ -340,4 +343,4 @@ async function getPostswithUsers({ limit=25, skip=0, filter={}, sort={ _id: -1 }
     }
 }
 
-export { addAuthor, addPost, addPostsMany, getPostswithUsers as getPosts };
+export { addAuthor, addPost as addPostDB, addPostsMany, getPostswithUsers as getPostsDB };

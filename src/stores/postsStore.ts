@@ -1,7 +1,7 @@
 import { writable, derived } from "svelte/store";
 import { locale } from "svelte-i18n";
 import Post from "$lib/schemas/Post";
-import { info, error } from "$lib/logging";
+import { info, error, warn } from "$lib/logging";
 
 // TODO: Do people, like store these in localStorage? ::cough:: ::cough:: gunDB support?
 const MAX_POSTS = 500;
@@ -34,7 +34,11 @@ class PostsList {
         const old_length = this._posts.length;
         posts = Array.isArray(posts)? posts: [ posts ];
         posts.forEach( post => this._posts_map.set(post.uid, post) );
-        this._posts_map = new Map([...this._posts_map].sort( (uid_a, uid_b) => +uid_a - +uid_b ));
+
+        // create a new map to sort the old!
+        this._posts_map = new Map([...this._posts_map].sort(
+            (uid_a, uid_b) => +uid_a - +uid_b )
+        );
 
         this._posts = [...this._posts_map.values()]
         // this._posts = new Array<Post>(...this._posts_map.values().sort());
@@ -43,8 +47,8 @@ class PostsList {
     }
 
     public insertLast(post: Post){
-        // Not implemented
-        error('PostsList.insertLast: not implemented -- unshift?');
+        // TODO: Not implemented
+        warn('PostsList.insertLast: not implemented fully-- unshift?');
         this._posts_map.set(post.uid, post);
         this._posts.unshift(post);
     }
@@ -91,10 +95,11 @@ function create_store(){
             set(filters);
         }
 
-        return { subscribe,
-                update,
-                set: _set
-                }
+        return { 
+            subscribe,
+            update,
+            set: _set
+        }
     })();
 
     const _all_posts = writable(_posts);
@@ -115,15 +120,15 @@ function create_store(){
         const [{ posts, searchParams, latest, query_exhausted }] = await Promise.all([
             _fetch(`posts.json?${params}`, { credentials: 'include' }).then(r => r.json()),
         ])
-        info({searchParams, latest, query_exhausted });
+        console.log({searchParams, posts, latest, query_exhausted });
         if(query_exhausted){
             exhausted_queries.push(searchParams);
             last_query_exhausted = true;
         }
         if(Array.isArray(posts)){
             if(latest){
-                _filled_range.newest = `${posts[0]._id}`;
-                _filled_range.oldest = `${posts[posts.length-1]._id}`;
+                _filled_range.newest = `${posts[0]?._id}`;
+                _filled_range.oldest = `${posts[posts.length-1]?._id}`;
             }
             // call the set function only if the insertion of at least one element was 
             //      successful
@@ -151,11 +156,10 @@ function create_store(){
         // TODO: is this a good way? are we just updating the reference?
         // DEBUG: Have not tested
         error("posts store 'insert' have not been tested.")
-        // _all_posts.update(posts => {
-        //     posts.unshift(post);
-        //     if(posts.length > MAX_POSTS) posts.shift();
-        //     return posts;
-        // });
+        _all_posts.update(posts => {
+            posts.insertLast(post);
+            return posts;
+        });
         return Promise.resolve("postId-24charstring");
     }
            

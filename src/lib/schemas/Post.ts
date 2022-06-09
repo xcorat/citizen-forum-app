@@ -2,6 +2,7 @@ import Author from './Author';
 import { create_uid, tstamp_from_sl_tstring, tstamp_from_uid } from './functions';
 import topics_settings from '../../data/topics_settings';
 import { info } from '$lib/logging';
+import { date } from 'svelte-i18n';
 
 interface UIDBase {
     uid?: string,
@@ -52,10 +53,30 @@ export default class Post {
         this.tags = post.tags;
         this.locale = post.locale;
         this.meta = post.meta;
+
     }
 
-    static from_gform_post(gform_post, gform_index) {
-        const tstamp = tstamp_from_sl_tstring(gform_post["Timestamp"]) ;
+    static from_web_form(data){
+        const author = {
+            name: data.name,
+            dig_id: { type: data.digIDProvider, id: data.digID },
+        }
+
+        return new this({
+            author,
+            text: data.post,
+            title: data.title,
+            tstamp: new Date(data.tstamp),
+            locale: data.locale,
+            categories: {
+                topic: data.topicID,
+            },
+            meta: {},
+        });
+    }
+
+    static from_gform_post(gform_post, gform_index=null) {
+        const tstamp = tstamp_from_sl_tstring(gform_post["Timestamp"]);
         // const tstamp = tstamp_from_sl_tstring(gform_post["කාල මුද්‍රාව"]) ;
         const text = gform_post["ඔබේ යෝජනා / Your suggestions / உங்கள் பரிந்துரைகள்"];
         const meta = { gform_index };

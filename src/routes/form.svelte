@@ -9,8 +9,8 @@
 
     import topics_settings from '../data/topics_settings.json';
     import TranslatableSelect from '../components/translatableSelect.svelte';
+import Post from '$lib/schemas/Post';
 
-    import  submitGoogleForm from '../lib/submit_form';
     
     // TODO: read this from the path?
     const page_id = 'form'
@@ -27,38 +27,73 @@
     
     // Create form
     const npForm = form(name, digIDProvider, digID, topic, title, post);
+    let submitting = false;
     
     const digIDPs = ["Email Address", "Phone Number", "Facebook Link", "Twitter Link"];
-    //submitGoogleForm({});
-    const submitHandler = () => {
+
+
+    async function submitGoogleForm(form_summary) {
+        // TODO: check how to get the redirects working.
+        //      The errpr asks to use a file called `_redirects`, but not sure
+        //      where to put it.
+        // const url = "/api/submit_form"
+        const url = "api/submit_form"
+        async function post_form (form_summary) {
+            const res = await fetch(url, {
+                method: 'POST',
+                body: JSON.stringify(form_summary)
+            })
+            console.log(res);
+            const json = await res.json()
+            return json;
+        }
+        const res = await post_form(form_summary);
+        // TODO: response handling..
+        return res;
+    }
+
+    async function submitHandler() {
         // https://docs.google.com/forms/d/e/1FAIpQLSe3IcJXD8T5ey5fMdv9Krceve9C3Ti1oNiQOIjvrRE5bl6aGw/viewform?usp=pp_url&entry.1857901265=name&entry.1590668805=Phone+Number&entry.117508226=email&entry.474571559=National+Security+and+Intelligence+%E0%B6%A2%E0%B7%8F%E0%B6%AD%E0%B7%92%E0%B6%9A+%E0%B6%86%E0%B6%BB%E0%B6%9A%E0%B7%8A%E0%B7%82%E0%B7%8F%E0%B7%80+%E0%B7%84%E0%B7%8F+%E0%B6%B6%E0%B7%94%E0%B6%AF%E0%B7%8A%E0%B6%B0%E0%B7%92%E0%B6%B8%E0%B6%BA+%E0%B6%9A%E0%B6%A7%E0%B6%BA%E0%B7%94%E0%B6%AD%E0%B7%94+%E0%AE%A4%E0%AF%87%E0%AE%9A%E0%AE%BF%E0%AE%AF+%E0%AE%AA%E0%AE%BE%E0%AE%A4%E0%AF%81%E0%AE%95%E0%AE%BE%E0%AE%AA%E0%AF%8D%E0%AE%AA%E0%AF%81+%E0%AE%AE%E0%AE%B1%E0%AF%8D%E0%AE%B1%E0%AF%81%E0%AE%AE%E0%AF%8D+%E0%AE%89%E0%AE%B3%E0%AE%B5%E0%AF%81%E0%AE%A4%E0%AF%8D%E0%AE%A4%E0%AF%81%E0%AE%B1%E0%AF%88&entry.239756388=sugg
         npForm.validate();
-
+        
+        
         if(!$npForm.valid) return;
-
+        
         const vals = get(npForm).summary;
-
+        
         let topic_val = vals.topic.value;
-        let topic = topics_settings[topic_val].label.en_GB + " "
-                    + topics_settings[topic_val].label.si_LK + " "
-                    + topics_settings[topic_val].label.ta_LK;
-
+        let topic = topics_settings[topic_val].label.en + " "
+                    + topics_settings[topic_val].label.si + " "
+                    + topics_settings[topic_val].label.ta;
+                    
         let data = {
+            tstamp: new Date(),
             name: vals.name, 
             digIDProvider: vals.digIDProvider.label,
             digID: vals.digID,
             topic: topic,
+            topicID: topic_val,
             title: vals.title,
             post: vals.post,
+            locale: get(locale),
         }
-
+        
         // Add data to the google form
-        submitGoogleForm(data);
-
-        posts.insert(data)
+        submitting = true;
+        // TODO: check for errors
+        try {
+            await submitGoogleForm(data);
+            submitting = false;
+        } catch(e){
+            console.log(e);
+            submitting = false
+        }
+        
+        // TODO: do we insert the post right away or wait for the response from
+        //      google and db connection?
+        posts.insert(Post.from_web_form(data))
         npForm.reset();
         $npForm.dirty = false;
-        console.log(get(npForm).summary);
     }
   </script>
   

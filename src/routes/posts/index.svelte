@@ -68,7 +68,7 @@
     }
 
         // we dont need too many calls initially, and this wont work on SSR anyway
-    const localte_unsubscribe = locale.subscribe( (locale) => {
+    const locale_unsubscribe = locale.subscribe( (locale) => {
         if(page_mounted) update_page('locale', locale);
     });
 
@@ -85,7 +85,7 @@
     });
 
     onDestroy( () => {
-        localte_unsubscribe();
+        locale_unsubscribe();
     })
 
 </script>

@@ -31,5 +31,16 @@ function get_mongo() {
     return mongo;
 }
 
+export const google_form = {
+    debug: '1wdiZObfkHM33v4a7cA2DWZRtKhWNfrh3rwPOWXYDlTU',
+    entry_ids: {
+        name: '1857901265',
+        digIDProvider: '1590668805',
+        digID: '117508226',
+        topic: '474571559',
+        full_post: '239756388',
+    }
+}
+
 export const gcs_lang = get_gcs_lang();
 export const mongo = get_mongo();

@@ -1,5 +1,5 @@
-import { getPostswithUsers as getPostsDB} from '$lib/db';
-import { info } from '$lib/logging';
+import { getPostsDB, addPostDB } from '$lib/db';
+import type Post from '$lib/schemas/Post'
 import { tstamp_from_uid } from '$lib/schemas/functions';
 
 // Hmm... should try out 'functional programming sometime.. 🤷
@@ -89,6 +89,21 @@ async function getPosts(params: any){
     return await getPostsDB({ ...query });
 }
 
+/**
+ * Not clear what to implement here.. do we do checking here? 
+ * or at the db connection level?
+ * 
+ * this gets called from wherever, and is the layer before the db layer
+ * So maybe the checking should be done here?
+ * 
+ * what if someone try to access the db.ts?
+ * 
+ * probably not...
+ * @param post to be added
+ */
+async function addPost(post: Post){
+    return await addPostDB(post);
+}
 
 export type { GetPostsQuery } 
-export { getPosts }
+export { getPosts, addPost }

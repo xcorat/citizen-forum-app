@@ -12,7 +12,7 @@ export default class Author {
     constructor(author) {
         this.uuid = author?.uuid || author?._id;
         this.name = author.name;
-        if(!this.name) throw TypeError("Cannot find property name.")
+        if(!this.name) throw TypeError("Cannot find property: name.")
         if(Array.isArray(author.dig_ids)){
             this.dig_ids = author.dig_ids.map(dig_id => ({type: dig_id.type, id: dig_id.id}) )
         }
